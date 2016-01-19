@@ -21,23 +21,27 @@ namespace JacoChat
                     break;
                 case "-l":
                     client = new JacoChatServer();
-                    port = Convert.ToInt32(args[1]);
-                    ((JacoChatServer)client).Listen(port);
+                    ip = args[1];
+                    port = Convert.ToInt32(args[2]);
+                    ((JacoChatServer)client).Listen(ip, port);
                     break;
                 default:
                     throw new Exception("Must be -c or -l");
             }
             client.MessageRecieved += client_MessageRecieved;
-
+            client.UserJoined += client_UserJoined;
             while (true)
-            {
                 client.Send(Console.ReadLine());
-            }
         }
 
         private static void client_MessageRecieved(object sender, MessageRecievedEventArgs e)
         {
             Console.WriteLine(e.Bytes + "\t" + e.Message);
+        }
+
+        private static void client_UserJoined(object sender, UserJoinedEventArgs e)
+        {
+            Console.WriteLine("A user has connected " + e.Client.IpAddress);
         }
     }
 }

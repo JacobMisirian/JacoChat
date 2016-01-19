@@ -51,6 +51,8 @@ namespace JacoChat
             if (handler != null)
                 handler(this, e);
         }
+
+        public event EventHandler<UserJoinedEventArgs> UserJoined;
     }
 }
 
