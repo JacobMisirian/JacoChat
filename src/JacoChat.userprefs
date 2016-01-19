@@ -1,0 +1,16 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="JacoChat/Program.cs">
+    <Files>
+      <File FileName="JacoChat/Program.cs" Line="44" Column="1" />
+      <File FileName="JacoChat/JacoChat/JacoChatClient.cs" Line="42" Column="41" />
+      <File FileName="JacoChat/JacoChat/JacoChatServer.cs" Line="36" Column="48" />
+      <File FileName="JacoChat/JacoChat/Events.cs" Line="4" Column="2" />
+      <File FileName="JacoChat/JacoChat/IJacoChat.cs" Line="9" Column="32" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
