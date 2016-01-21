@@ -39,17 +39,12 @@ namespace JacoChatServer
             }
         }
 
-        public void SendToChannel(string channelName, string message, Client sender)
+        public void SendToChannel(Channel channel, string message, Client sender)
         {
             try
             {
-                if (!sender.Channels.ContainsKey(channelName))
-                    SendToUser(sender.NickName, MessageGeneration.GenerateError("No such channel " + channelName), sender);
-                else
-                {
-                    foreach (KeyValuePair<string, Client> client in sender.Channels[channelName].Clients)
-                        SendToUser(client.Value.NickName, message, sender);
-                }
+                foreach (KeyValuePair<string, Client> client in channel.Clients)
+                    SendToUser(client.Value.NickName, message, sender);
             }
             catch (IOException ex)
             {

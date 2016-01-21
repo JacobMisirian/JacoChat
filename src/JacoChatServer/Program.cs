@@ -32,7 +32,7 @@ namespace JacoChatServer
                     if (channel.Clients.ContainsValue(e.Client))
                     {
                         channel.Clients.Remove(e.Client.NickName);
-                        Handler.SendToChannel(channel.ChannelName, MessageGeneration.GenerateQuit(channel.ChannelName, e.Client.NickName, e.Reason), e.Client);
+                        Handler.SendToChannel(channel, MessageGeneration.GenerateQuit(channel.ChannelName, e.Client.NickName, e.Reason), e.Client);
                     }
                 }
             }
