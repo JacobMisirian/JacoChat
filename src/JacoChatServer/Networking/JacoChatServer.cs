@@ -33,23 +33,61 @@ namespace JacoChatServer
        
         private void listenForClients()
         {
+            Client client = null;
             while (true)
             {
-                Client client = new Client(listener.AcceptTcpClient());
-                Clients.Add(client);
-                new Thread(() => listenForMessagesFromUser(client)).Start();
+                try
+                {
+                    client = new Client(listener.AcceptTcpClient());
+                    Clients.Add(client);
+                    new Thread(() => listenForMessagesFromUser(client)).Start();
+                    new Thread(() => sendPing(client)).Start();
+                }
+                catch (SocketException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    OnUserDisconnected(new UserDisconnectedEventArgs { Client = client, Reason = ex.Message });
+                }
             }
         }
 
-
         private void listenForMessagesFromUser(Client client)
         {
-            var input = client.Input;
-            while (true)
+            try
             {
-                string message = input.ReadLine();
-                OnMessageRecieved(new MessageRecievedEventArgs { Client = client, Message = message });
+                while (true)
+                {
+                    string message = client.Input.ReadLine();
+                    if (message == "PONG")
+                        client.Ping = 0;
+                    OnMessageRecieved(new MessageRecievedEventArgs { Client = client, Message = message });
+                }
             }
+            catch (SocketException ex)
+            {
+                Console.WriteLine(ex.Message);
+                OnUserDisconnected(new UserDisconnectedEventArgs { Client = client, Reason = ex.Message });
+            }
+        }
+
+        private void sendPing(Client client)
+        {
+            try
+            {
+                while (client.Ping <= 10000)
+                {
+                    client.Output.WriteLine("PING");
+                    client.Output.Flush();
+                    client.Ping += 1000;
+                    Thread.Sleep(1000);
+                }
+            }
+            catch (SocketException ex)
+            {
+                Console.WriteLine(ex.Message);
+                OnUserDisconnected(new UserDisconnectedEventArgs { Client = client, Reason = ex.Message });
+            }
+            OnUserDisconnected(new UserDisconnectedEventArgs { Client = client, Reason = "Ping Timeout: 10 Seconds" } );
         }
 
         public event EventHandler<MessageRecievedEventArgs> MessageRecieved;
@@ -67,6 +105,14 @@ namespace JacoChatServer
             if (handler != null)
                 handler(this, e);
         }
+
+        public event EventHandler<UserDisconnectedEventArgs> UserDisconnected;
+        protected virtual void OnUserDisconnected(UserDisconnectedEventArgs e)
+        {
+            EventHandler<UserDisconnectedEventArgs> handler = UserDisconnected;
+            if (handler != null)
+                handler(this, e);
+        }
     }
 
     public class MessageRecievedEventArgs : EventArgs
@@ -79,6 +125,12 @@ namespace JacoChatServer
     public class UserJoinedEventArgs : EventArgs
     {
         public Client Client { get; set; }
+    }
+
+    public class UserDisconnectedEventArgs : EventArgs
+    {
+        public Client Client { get; set; }
+        public string Reason { get; set; }
     }
 }
 

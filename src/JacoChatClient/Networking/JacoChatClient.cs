@@ -32,7 +32,13 @@ namespace JacoChatClient
             while (true)
             {
                 string responseData = input.ReadLine();
-                OnMessageRecieved(new MessageRecievedEventArgs { Message = responseData } );
+                if (responseData == "PING")
+                {
+                    output.WriteLine("PONG");
+                    output.Flush();
+                }
+                else
+                    OnMessageRecieved(new MessageRecievedEventArgs { Message = responseData } );
             }
         }
 

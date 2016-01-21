@@ -16,6 +16,8 @@ namespace JacoChatClient
 
         private static void client_MessageRecieved(object sender, MessageRecievedEventArgs e)
         {
+           // var messasge = JacoChatMessage.Parse(e.Message);
+            //Console.WriteLine("<" + messasge.Sender + ":" + messasge.Reciever + "> " + messasge.Body);
             Console.WriteLine(e.Message);
         }
     }

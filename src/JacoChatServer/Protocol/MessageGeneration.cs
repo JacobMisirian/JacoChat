@@ -26,9 +26,22 @@ namespace JacoChatServer
             return channel + " JOIN " + user;
         }
 
+        public static string GenerateNick(string channel, string oldNick, string newNick)
+        {
+            return channel + " NICK " + oldNick + " " + newNick;
+        }
+
         public static string GenerateQuit(string channel, string user, string reason)
         {
             return channel + " QUIT " + user + " :" + reason;
+        }
+
+        public static string GenerateNames(string channel, Channel chan)
+        {
+            string nameList = "";
+            foreach (Client client in chan.Clients)
+                nameList += client.NickName + " ";
+            return channel + " NAMES :" + nameList;
         }
     }
 }

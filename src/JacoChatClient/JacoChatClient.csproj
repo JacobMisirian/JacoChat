@@ -38,6 +38,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Networking\IJacoChat.cs" />
     <Compile Include="Networking\JacoChatClient.cs" />
+    <Compile Include="JacoChatMessage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
