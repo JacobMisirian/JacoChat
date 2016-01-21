@@ -29,9 +29,9 @@ namespace JacoChatServer
                 Server.Clients.Remove(e.Client);
                 foreach (Channel channel in Handler.Channels)
                 {
-                    if (channel.Clients.Contains(e.Client))
+                    if (channel.Clients.ContainsValue(e.Client))
                     {
-                        channel.Clients.Remove(e.Client);
+                        channel.Clients.Remove(e.Client.NickName);
                         Handler.SendToChannel(channel.ChannelName, MessageGeneration.GenerateQuit(channel.ChannelName, e.Client.NickName, e.Reason));
                     }
                 }

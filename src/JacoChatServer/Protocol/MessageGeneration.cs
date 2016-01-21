@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace JacoChatServer
 {
@@ -6,8 +7,6 @@ namespace JacoChatServer
     {
         public static string GeneratePRIVMSG(string reciever, string user, string message)
         {
-            if (reciever.StartsWith("#"))
-                return reciever + " PRIVMSG " + user + " :" + message;
             return user + " PRIVMSG " + reciever + " :" + message;
         }
 
@@ -18,29 +17,29 @@ namespace JacoChatServer
 
         public static string GeneratePart(string channel, string user, string reason)
         {
-            return channel + " PART " + user + " :" + reason;
+            return user + " PART " + channel + " :" + reason;
         }
 
         public static string GenerateJoin(string channel, string user)
         {
-            return channel + " JOIN " + user;
+            return user + " JOIN " + channel;
         }
 
         public static string GenerateNick(string channel, string oldNick, string newNick)
         {
-            return channel + " NICK " + oldNick + " " + newNick;
+            return oldNick + " NICK " + channel + " " + newNick;
         }
 
         public static string GenerateQuit(string channel, string user, string reason)
         {
-            return channel + " QUIT " + user + " :" + reason;
+            return user + " QUIT " + channel + " :" + reason;
         }
 
         public static string GenerateNames(string channel, Channel chan)
         {
             string nameList = "";
-            foreach (Client client in chan.Clients)
-                nameList += client.NickName + " ";
+            foreach (KeyValuePair<string, Client> entry in chan.Clients)
+                nameList += entry.Value.NickName + " ";
             return channel + " NAMES :" + nameList;
         }
     }

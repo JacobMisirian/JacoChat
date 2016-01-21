@@ -17,12 +17,23 @@ namespace JacoChatServer
             switch (parts[0])
             {
                 case "REGISTER":
-                    case "NICK":
+                case "NICK":
+                    string oldNick = client.NickName;
                     MainClass.Server.Clients.Remove(client);
                     client.NickName = parts[1];
                     MainClass.Server.Clients.Add(client);
+                    if (oldNick != null && oldNick != "")
+                        foreach (Channel chan in Channels)
+                        {
+                            if (chan.Clients.ContainsKey(oldNick))
+                            {
+                                SendToChannel(chan.ChannelName, MessageGeneration.GenerateNick(chan.ChannelName, oldNick, parts[1]));
+                                chan.Clients.Remove(oldNick);
+                                chan.Clients.Add(parts[1], client);
+                            }
+                        }
                     break;
-                    case "PRIVMSG":
+                case "PRIVMSG":
                     message = MessageGeneration.GeneratePRIVMSG(parts[1], client.NickName, substringStringArray(parts, 2));
                     if (parts[1].StartsWith("#"))
                         SendToChannel(parts[1], message);
@@ -37,7 +48,7 @@ namespace JacoChatServer
                         Channels.Add(new Channel(chanName));
                         pos = Channels.Count - 1;
                     }
-                    Channels[pos].Clients.Add(client);
+                    Channels[pos].Clients.Add(client.NickName, client);
                     SendToChannel(Channels[pos].ChannelName, MessageGeneration.GenerateJoin(Channels[pos].ChannelName, client.NickName));
                     SendToUser(client.NickName, MessageGeneration.GenerateNames(Channels[pos].ChannelName, Channels[pos]), client);
                     break;
@@ -49,12 +60,12 @@ namespace JacoChatServer
                         SendToUser(client.NickName, MessageGeneration.GenerateError("No such channel " + chanName), client);
                         break;
                     }
-                    if (!Channels[pos].Clients.Contains(client))
+                    if (!Channels[pos].Clients.ContainsKey(client.NickName))
                     {
                         SendToUser(client.NickName, MessageGeneration.GenerateError("Not in channel " + chanName), client);
                         break;
                     }
-                    Channels[pos].Clients.Remove(client);
+                    Channels[pos].Clients.Remove(client.NickName);
                     SendToChannel(chanName, MessageGeneration.GeneratePart(Channels[pos].ChannelName, client.NickName, substringStringArray(parts, 2)));
                     break;
                     case "NAMES":
@@ -65,7 +76,7 @@ namespace JacoChatServer
                         SendToUser(client.NickName, MessageGeneration.GenerateError("No such channel " + chanName), client);
                         break;
                     }
-                    if (!Channels[pos].Clients.Contains(client))
+                    if (!Channels[pos].Clients.ContainsKey(client.NickName))
                     {
                         SendToUser(client.NickName, MessageGeneration.GenerateError("Not in channel " + chanName), client);
                         break;
@@ -79,8 +90,8 @@ namespace JacoChatServer
         {
             foreach (Channel channel in Channels)
                 if (channel.ChannelName == channelName)
-                    foreach (Client client in channel.Clients)
-                        client.Send(message);
+                    foreach (KeyValuePair<string, Client> entry in channel.Clients)
+                        entry.Value.Send(message);
         }
 
         public void SendToUser(string user, string message, Client sender)
