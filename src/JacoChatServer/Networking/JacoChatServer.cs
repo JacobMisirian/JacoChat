@@ -60,7 +60,8 @@ namespace JacoChatServer
                     string message = client.Input.ReadLine();
                     if (message == "PONG")
                         client.Ping = 0;
-                    OnMessageRecieved(new MessageRecievedEventArgs { Client = client, Message = message });
+                    else
+                        OnMessageRecieved(new MessageRecievedEventArgs { Client = client, Message = message });
                 }
             }
             catch (SocketException ex)
