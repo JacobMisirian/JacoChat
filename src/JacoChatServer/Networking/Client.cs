@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -14,6 +15,7 @@ namespace JacoChatServer
         public StreamWriter Output { get; private set; }
         public string IpAddress { get { return ((IPEndPoint)TcpClient.Client.RemoteEndPoint).Address.ToString(); } }
         public int Ping { get; set; }
+        public Dictionary<string, Channel> Channels { get; private set; }
 
         public Client(TcpClient client)
         {
@@ -21,6 +23,7 @@ namespace JacoChatServer
             TcpClient = client;
             Input = new StreamReader(client.GetStream());
             Output = new StreamWriter(client.GetStream());
+            Channels = new Dictionary<string, Channel>();
         }
 
         public void Send(string message)

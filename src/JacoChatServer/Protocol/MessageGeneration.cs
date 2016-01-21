@@ -42,5 +42,10 @@ namespace JacoChatServer
                 nameList += entry.Value.NickName + " ";
             return channel + " NAMES :" + nameList;
         }
+
+        public static string GenerateTopic(Channel channel)
+        {
+            return channel.ChannelName + " TOPIC :" + channel.ChannelTopic;
+        }
     }
 }

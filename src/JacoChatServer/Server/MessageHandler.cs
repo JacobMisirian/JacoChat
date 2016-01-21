@@ -4,84 +4,36 @@ using System.Text;
 
 namespace JacoChatServer
 {
-    public class MessageHandler
+    public partial class MessageHandler
     {
         public List<Channel> Channels = new List<Channel>();
 
         public void Handle(Client client, string text)
         {
             var parts = text.Split(' ');
-            string chanName = "";
-            string message = "";
-            int pos = 0;
             switch (parts[0])
             {
                 case "REGISTER":
                 case "NICK":
-                    string oldNick = client.NickName;
-                    MainClass.Server.Clients.Remove(client);
-                    client.NickName = parts[1];
-                    MainClass.Server.Clients.Add(client);
-                    if (oldNick != null && oldNick != "")
-                        foreach (Channel chan in Channels)
-                        {
-                            if (chan.Clients.ContainsKey(oldNick))
-                            {
-                                SendToChannel(chan.ChannelName, MessageGeneration.GenerateNick(chan.ChannelName, oldNick, parts[1]));
-                                chan.Clients.Remove(oldNick);
-                                chan.Clients.Add(parts[1], client);
-                            }
-                        }
+                    NickCommand(client, parts[1]);
                     break;
                 case "PRIVMSG":
-                    message = MessageGeneration.GeneratePRIVMSG(parts[1], client.NickName, substringStringArray(parts, 2));
-                    if (parts[1].StartsWith("#"))
-                        SendToChannel(parts[1], message);
-                    else
-                        SendToUser(parts[1], message, client);
+                    PrivmsgCommand(client, parts[1], substringStringArray(parts, 2));
                     break;
                 case "JOIN":
-                    chanName = parts[1];
-                    pos = channelExists(chanName);
-                    if (pos == -1)
-                    {
-                        Channels.Add(new Channel(chanName));
-                        pos = Channels.Count - 1;
-                    }
-                    Channels[pos].Clients.Add(client.NickName, client);
-                    SendToChannel(Channels[pos].ChannelName, MessageGeneration.GenerateJoin(Channels[pos].ChannelName, client.NickName));
-                    SendToUser(client.NickName, MessageGeneration.GenerateNames(Channels[pos].ChannelName, Channels[pos]), client);
+                    JoinCommand(client, parts[1]);
                     break;
-                    case "PART":
-                    chanName = parts[1];
-                    pos = channelExists(chanName);
-                    if (pos == -1)
-                    {
-                        SendToUser(client.NickName, MessageGeneration.GenerateError("No such channel " + chanName), client);
-                        break;
-                    }
-                    if (!Channels[pos].Clients.ContainsKey(client.NickName))
-                    {
-                        SendToUser(client.NickName, MessageGeneration.GenerateError("Not in channel " + chanName), client);
-                        break;
-                    }
-                    Channels[pos].Clients.Remove(client.NickName);
-                    SendToChannel(chanName, MessageGeneration.GeneratePart(Channels[pos].ChannelName, client.NickName, substringStringArray(parts, 2)));
+                case "PART":
+                    PartCommand(client, parts[1], substringStringArray(parts, 2));
                     break;
-                    case "NAMES":
-                    chanName = parts[1];
-                    pos = channelExists(chanName);
-                    if (pos == -1)
-                    {
-                        SendToUser(client.NickName, MessageGeneration.GenerateError("No such channel " + chanName), client);
-                        break;
-                    }
-                    if (!Channels[pos].Clients.ContainsKey(client.NickName))
-                    {
-                        SendToUser(client.NickName, MessageGeneration.GenerateError("Not in channel " + chanName), client);
-                        break;
-                    }
-                    SendToUser(client.NickName, MessageGeneration.GenerateNames(chanName, Channels[pos]), client);
+                case "NAMES":
+                    NamesCommand(client, parts[1]);
+                    break;
+                case "TOPIC":
+                    if (parts.Length >= 3)
+                        TopicCommand(client, parts[1], substringStringArray(parts, 2));
+                    else
+                        TopicCommand(client, parts[1]);
                     break;
             }
         }
@@ -123,6 +75,11 @@ namespace JacoChatServer
                 sb.Append(arr[x] + " ");
 
             return sb.ToString();
+        }
+
+        private bool checkPerms(Channel channel, string nick)
+        {
+            return channel.OpUsers.ContainsKey(nick);
         }
     }
 }
