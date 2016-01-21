@@ -44,7 +44,8 @@ namespace JacoChatServer
             try
             {
                 foreach (KeyValuePair<string, Client> client in channel.Clients)
-                    SendToUser(client.Value.NickName, message, sender);
+                    if (client.Value.NickName != sender.NickName)
+                        SendToUser(client.Value.NickName, message, sender);
             }
             catch (IOException ex)
             {
