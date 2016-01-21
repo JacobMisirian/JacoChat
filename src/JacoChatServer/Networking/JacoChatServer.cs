@@ -43,7 +43,7 @@ namespace JacoChatServer
                     new Thread(() => listenForMessagesFromUser(client)).Start();
                     new Thread(() => sendPing(client)).Start();
                 }
-                catch (SocketException ex)
+                catch (IOException ex)
                 {
                     Console.WriteLine(ex.Message);
                     OnUserDisconnected(new UserDisconnectedEventArgs { Client = client, Reason = ex.Message });
@@ -64,7 +64,7 @@ namespace JacoChatServer
                         OnMessageRecieved(new MessageRecievedEventArgs { Client = client, Message = message });
                 }
             }
-            catch (SocketException ex)
+            catch (IOException ex)
             {
                 Console.WriteLine(ex.Message);
                 OnUserDisconnected(new UserDisconnectedEventArgs { Client = client, Reason = ex.Message });
@@ -83,7 +83,7 @@ namespace JacoChatServer
                     Thread.Sleep(1000);
                 }
             }
-            catch (SocketException ex)
+            catch (IOException ex)
             {
                 Console.WriteLine(ex.Message);
                 OnUserDisconnected(new UserDisconnectedEventArgs { Client = client, Reason = ex.Message });
