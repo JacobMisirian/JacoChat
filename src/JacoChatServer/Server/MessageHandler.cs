@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace JacoChatServer
@@ -38,26 +39,42 @@ namespace JacoChatServer
             }
         }
 
-        public void SendToChannel(string channelName, string message)
+        public void SendToChannel(string channelName, string message, Client sender)
         {
-            foreach (Channel channel in Channels)
-                if (channel.ChannelName == channelName)
-                    foreach (KeyValuePair<string, Client> entry in channel.Clients)
-                        entry.Value.Send(message);
+            try
+            {
+                if (!sender.Channels.ContainsKey(channelName))
+                    SendToUser(sender.NickName, MessageGeneration.GenerateError("No such channel " + channelName), sender);
+                else
+                {
+                    foreach (KeyValuePair<string, Client> client in sender.Channels[channelName].Clients)
+                        SendToUser(client.Value.NickName, message, sender);
+                }
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public void SendToUser(string user, string message, Client sender)
         {
-            foreach (Client client in MainClass.Server.Clients)
+            try
             {
-                if (client.NickName == user)
+                foreach (Client client in MainClass.Server.Clients)
                 {
-                    client.Send(message);
-                    return;
+                    if (client.NickName == user)
+                    {
+                        client.Send(message);
+                        return;
+                    }
                 }
+                sender.Send(MessageGeneration.GenerateError("No such user " + user));
             }
-
-            sender.Send(MessageGeneration.GenerateError("No such user " + user));
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private int channelExists(string chanName)

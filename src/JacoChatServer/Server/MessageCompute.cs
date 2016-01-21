@@ -11,25 +11,17 @@ namespace JacoChatServer
             MainClass.Server.Clients.Remove(client);
             client.NickName = newNick;
             MainClass.Server.Clients.Add(client);
+
             if (oldNick != null && oldNick != "")
-            {
-                foreach (Channel chan in Channels)
-                {
-                    if (chan.Clients.ContainsKey(oldNick))
-                    {
-                        SendToChannel(chan.ChannelName, MessageGeneration.GenerateNick(chan.ChannelName, oldNick, newNick));
-                        chan.Clients.Remove(oldNick);
-                        chan.Clients.Add(newNick, client);
-                    }
-                }
-            }
+                foreach (KeyValuePair<string, Channel> chan in client.Channels)
+                    SendToChannel(chan.Key, MessageGeneration.GenerateNick(chan.Key, oldNick, newNick), client);
         }
 
         public void PrivmsgCommand(Client client, string reciever, string text)
         {
             string message = MessageGeneration.GeneratePRIVMSG(reciever, client.NickName, text);
             if (reciever.StartsWith("#"))
-                SendToChannel(reciever, message);
+                SendToChannel(reciever, message, client);
             else
                 SendToUser(reciever, message, client);
         }
@@ -51,7 +43,7 @@ namespace JacoChatServer
             if (Channels[pos].OpUsers.Count == 0)
                 Channels[pos].OpUsers.Add(client.NickName, client);
             Channels[pos].Clients.Add(client.NickName, client);
-            SendToChannel(Channels[pos].ChannelName, MessageGeneration.GenerateJoin(Channels[pos].ChannelName, client.NickName));
+            SendToChannel(Channels[pos].ChannelName, MessageGeneration.GenerateJoin(Channels[pos].ChannelName, client.NickName), client);
             SendToUser(client.NickName, MessageGeneration.GenerateNames(Channels[pos].ChannelName, Channels[pos]), client);
             SendToUser(client.NickName, MessageGeneration.GenerateTopic(Channels[pos]), client);
             client.Channels.Add(Channels[pos].ChannelName, Channels[pos]);
@@ -68,7 +60,7 @@ namespace JacoChatServer
             {
                 Channels[pos].Clients.Remove(client.NickName);
                 client.Channels.Remove(Channels[pos].ChannelName);
-                SendToChannel(chanName, MessageGeneration.GeneratePart(Channels[pos].ChannelName, client.NickName, reason));
+                SendToChannel(chanName, MessageGeneration.GeneratePart(Channels[pos].ChannelName, client.NickName, reason), client);
             }
         }
 
@@ -101,7 +93,7 @@ namespace JacoChatServer
                 if (chan.OpUsers.ContainsKey(client.NickName))
                 {
                     chan.ChannelTopic = newTopic;
-                    SendToChannel(chan.ChannelName, MessageGeneration.GenerateTopic(chan));
+                    SendToChannel(chan.ChannelName, MessageGeneration.GenerateTopic(chan), client);
                 }
                 else
                     SendToUser(client.NickName, MessageGeneration.GenerateError("You are not an OP in " + chanName), client);
