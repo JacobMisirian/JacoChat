@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 
-namespace JacoChat
+namespace JacoChatServer
 {
-    public class JacoChatServer : IJacoChat
+    public class JacoChatServer
     {
         public List<Client> Clients = new List<Client>();
         private TcpListener listener;
@@ -23,32 +25,18 @@ namespace JacoChat
         public void Send(string message)
         {
             foreach (Client client in Clients)
-                Send(client.Stream, message);
+            {
+                client.Output.WriteLine(message);
+                client.Output.Flush();
+            }
         }
-
-        public void Send(byte[] data)
-        {
-            foreach (Client client in Clients)
-                Send(client.Stream, data);
-        }
-
-        public void Send(NetworkStream stream, string message)
-        {
-            Send(stream, System.Text.Encoding.ASCII.GetBytes(message));
-        }
-
-        public void Send(NetworkStream stream, byte[] data)
-        {
-            stream.Write(data, 0, data.Length);
-        }
-
+       
         private void listenForClients()
         {
             while (true)
             {
                 Client client = new Client(listener.AcceptTcpClient());
                 Clients.Add(client);
-                OnUserJoined(new UserJoinedEventArgs { Client = client } );
                 new Thread(() => listenForMessagesFromUser(client)).Start();
             }
         }
@@ -56,16 +44,11 @@ namespace JacoChat
 
         private void listenForMessagesFromUser(Client client)
         {
-            var stream = client.Stream;
+            var input = client.Input;
             while (true)
             {
-                Byte[] bytes = new Byte[256];
-                int i;
-                while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
-                {
-                    var data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-                    OnMessageRecieved(new MessageRecievedEventArgs { Message = data, Bytes = i, Client = client });
-                }
+                string message = input.ReadLine();
+                OnMessageRecieved(new MessageRecievedEventArgs { Client = client, Message = message });
             }
         }
 
@@ -84,6 +67,18 @@ namespace JacoChat
             if (handler != null)
                 handler(this, e);
         }
+    }
+
+    public class MessageRecievedEventArgs : EventArgs
+    {
+        public string Message { get; set; }
+        public Int32 Bytes { get { return Message.Length; } }
+        public Client Client { get; set; }
+    }
+
+    public class UserJoinedEventArgs : EventArgs
+    {
+        public Client Client { get; set; }
     }
 }
 
