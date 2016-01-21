@@ -13,8 +13,14 @@ namespace JacoChatServer
             MainClass.Server.Clients.Add(client);
 
             if (oldNick != null && oldNick != "")
+            {
                 foreach (KeyValuePair<string, Channel> chan in client.Channels)
+                {
                     SendToChannel(chan.Value, MessageGeneration.GenerateNick(chan.Key, oldNick, newNick), client);
+                    chan.Value.Clients.Remove(oldNick);
+                    chan.Value.Clients.Add(newNick, client);
+                }
+            }
         }
 
         public void PrivmsgCommand(Client client, string reciever, string text)
