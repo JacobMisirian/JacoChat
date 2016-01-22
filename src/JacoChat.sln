@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacoChatServer", "JacoChatS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacoChatClient", "JacoChatClient\JacoChatClient.csproj", "{53C49270-3392-469A-AE5C-E075242E2F5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JacoChatConfigGenerator", "JacoChatConfigGenerator\JacoChatConfigGenerator.csproj", "{6609AB78-A939-46B3-A6A0-0D2A5BB35071}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,6 +17,10 @@ Global
 		{53C49270-3392-469A-AE5C-E075242E2F5E}.Debug|x86.Build.0 = Debug|x86
 		{53C49270-3392-469A-AE5C-E075242E2F5E}.Release|x86.ActiveCfg = Release|x86
 		{53C49270-3392-469A-AE5C-E075242E2F5E}.Release|x86.Build.0 = Release|x86
+		{6609AB78-A939-46B3-A6A0-0D2A5BB35071}.Debug|x86.ActiveCfg = Debug|x86
+		{6609AB78-A939-46B3-A6A0-0D2A5BB35071}.Debug|x86.Build.0 = Debug|x86
+		{6609AB78-A939-46B3-A6A0-0D2A5BB35071}.Release|x86.ActiveCfg = Release|x86
+		{6609AB78-A939-46B3-A6A0-0D2A5BB35071}.Release|x86.Build.0 = Release|x86
 		{9281FE1D-6811-453D-A125-A4AE301D764D}.Debug|x86.ActiveCfg = Debug|x86
 		{9281FE1D-6811-453D-A125-A4AE301D764D}.Debug|x86.Build.0 = Debug|x86
 		{9281FE1D-6811-453D-A125-A4AE301D764D}.Release|x86.ActiveCfg = Release|x86

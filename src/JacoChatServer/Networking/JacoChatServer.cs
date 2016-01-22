@@ -45,7 +45,7 @@ namespace JacoChatServer
                 }
                 catch (IOException ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    MainClass.ProcessOutput(ex.Message);
                     OnUserDisconnected(new UserDisconnectedEventArgs { Client = client, Reason = ex.Message });
                 }
             }
@@ -66,7 +66,7 @@ namespace JacoChatServer
             }
             catch (IOException ex)
             {
-                Console.WriteLine(ex.Message);
+                MainClass.ProcessOutput(ex.Message);
                 OnUserDisconnected(new UserDisconnectedEventArgs { Client = client, Reason = ex.Message });
             }
         }
@@ -85,7 +85,7 @@ namespace JacoChatServer
             }
             catch (IOException ex)
             {
-                Console.WriteLine(ex.Message);
+                MainClass.ProcessOutput(ex.Message);
                 OnUserDisconnected(new UserDisconnectedEventArgs { Client = client, Reason = ex.Message });
             }
             OnUserDisconnected(new UserDisconnectedEventArgs { Client = client, Reason = "Ping Timeout: 10 Seconds" } );

@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9281FE1D-6811-453D-A125-A4AE301D764D}</ProjectGuid>
+    <ProjectGuid>{6609AB78-A939-46B3-A6A0-0D2A5BB35071}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>JacoChatServer</RootNamespace>
-    <AssemblyName>JacoChatServer</AssemblyName>
+    <RootNamespace>JacoChatConfigGenerator</RootNamespace>
+    <AssemblyName>JacoChatConfigGenerator</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,21 +36,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Networking\JacoChatServer.cs" />
-    <Compile Include="Networking\Client.cs" />
-    <Compile Include="Networking\IJacoChat.cs" />
-    <Compile Include="Server\MessageHandler.cs" />
-    <Compile Include="Server\Channel.cs" />
-    <Compile Include="Protocol\MessageGeneration.cs" />
-    <Compile Include="Server\Commands.cs" />
-    <Compile Include="Config\JacoChatConfigurationReader.cs" />
-    <Compile Include="Config\JacoChatConfiguration.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Networking\" />
-    <Folder Include="Server\" />
-    <Folder Include="Protocol\" />
-    <Folder Include="Config\" />
-  </ItemGroup>
 </Project>

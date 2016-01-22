@@ -61,7 +61,7 @@ namespace JacoChatClient
                     type = JacoChatMessageType.QUIT;
                     sender = parts[0];
                     channel = parts[2];
-                    body = message.Substring(message.IndexOf(":"));
+                    body = message.Substring(message.IndexOf(":") + 1);
                     break;
                 case "NAMES":
                     type = JacoChatMessageType.NAMES;
