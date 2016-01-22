@@ -40,12 +40,12 @@ namespace JacoChatServer
             string nameList = "";
             foreach (KeyValuePair<string, Client> entry in chan.Clients)
                 nameList += entry.Value.NickName + " ";
-            return channel + " NAMES :" + nameList;
+            return "server NAMES " + channel + " :" + nameList;
         }
 
         public static string GenerateTopic(Channel channel)
         {
-            return channel.ChannelName + " TOPIC :" + channel.ChannelTopic;
+            return "server TOPIC " + channel.ChannelName + " :" + channel.ChannelTopic;
         }
 
         public static string GenerateWhois(string user, string data)
