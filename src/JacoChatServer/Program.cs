@@ -26,6 +26,10 @@ namespace JacoChatServer
             {
                 e.Client.Send(MessageGeneration.GenerateError("Message not in correct format. " + ex.Message));
             }
+            catch (ArgumentNullException ex)
+            {
+                e.Client.Send(MessageGeneration.GenerateError("Message not in correct format. " + ex.Message));
+            }
         }
 
         public static void server_OnUserDisconnected(object sender, UserDisconnectedEventArgs e)
