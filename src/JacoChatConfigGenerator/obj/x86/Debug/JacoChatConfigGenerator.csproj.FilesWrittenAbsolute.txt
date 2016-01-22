@@ -1,0 +1,5 @@
+/home/reagan/JacoChat/src/JacoChatConfigGenerator/obj/x86/Debug/.NETFramework,Version=v4.0.AssemblyAttribute.cs
+/home/reagan/JacoChat/src/JacoChatConfigGenerator/bin/Debug/JacoChatConfigGenerator.exe.mdb
+/home/reagan/JacoChat/src/JacoChatConfigGenerator/bin/Debug/JacoChatConfigGenerator.exe
+/home/reagan/JacoChat/src/JacoChatConfigGenerator/obj/x86/Debug/JacoChatConfigGenerator.exe
+/home/reagan/JacoChat/src/JacoChatConfigGenerator/obj/x86/Debug/JacoChatConfigGenerator.exe.mdb
