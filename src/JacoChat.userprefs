@@ -1,11 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="JacoChatClient/Protocol/JacoChatMessage.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="JacoChatServer/Server/MessageHandler.cs">
     <Files>
-      <File FileName="JacoChatClient/Program.cs" Line="8" Column="10" />
-      <File FileName="JacoChatClient/Networking/JacoChatClient.cs" Line="19" Column="1" />
-      <File FileName="JacoChatClient/Protocol/JacoChatMessage.cs" Line="7" Column="16" />
+      <File FileName="JacoChatServer/Protocol/MessageGeneration.cs" Line="57" Column="10" />
+      <File FileName="JacoChatServer/Server/MessageHandler.cs" Line="52" Column="27" />
+      <File FileName="JacoChatServer/Server/Commands.cs" Line="1" Column="14" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="JacoChatClient" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

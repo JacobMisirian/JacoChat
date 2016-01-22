@@ -62,5 +62,14 @@ namespace JacoChatServer
         {
             return user + " BAN " + channel;
         }
+
+        public static string GenerateList()
+        {
+            string channelList = "";
+            foreach (Channel channel in MainClass.Handler.Channels)
+                channelList += channel.ChannelName + " " + channel.Clients.Count + " Users. " + channel.ChannelTopic + "\n";
+
+            return "server LIST :" + channelList;
+        }
     }
 }

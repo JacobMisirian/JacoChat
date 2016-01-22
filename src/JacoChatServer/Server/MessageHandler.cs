@@ -13,6 +13,13 @@ namespace JacoChatServer
         {
             client.CountedMilliseconds = client.Time.ElapsedMilliseconds;
             var parts = text.Split(' ');
+
+            if ((client.NickName == null || client.NickName == "") && (parts[0] != "NICK" && parts[0] != "REGISTER"))
+            {
+                client.Send(MessageGeneration.GenerateError("Must set nick first with NICK [NICK] or /NICK [NICK]"));
+                return;
+            }
+
             switch (parts[0])
             {
                 case "REGISTER":
@@ -45,6 +52,9 @@ namespace JacoChatServer
                     break;
                 case "BAN":
                     BanCommand(client, parts[1], parts[2]);
+                    break;
+                case "LIST":
+                    ListCommand(client);
                     break;
             }
         }

@@ -7,6 +7,15 @@ namespace JacoChatServer
     {
         public void NickCommand(Client client, string newNick)
         {
+            foreach (Client cli in MainClass.Server.Clients)
+            {
+                if (cli.NickName == newNick)
+                {
+                    client.Send(MessageGeneration.GenerateError("Nick " + newNick + " is already taken"));
+                    return;
+                }
+            }
+
             string oldNick = client.NickName;
             MainClass.Server.Clients.Remove(client);
             client.NickName = newNick;
@@ -180,6 +189,11 @@ namespace JacoChatServer
                 SendToChannel(Channels[pos], MessageGeneration.GenerateBan(user, channel), client);
                 Channels[pos].BannedUsers.Add(user, Channels[pos].Clients[user]);
             }
+        }
+
+        public void ListCommand(Client client)
+        {
+            SendToUser(client.NickName, MessageGeneration.GenerateList(), client);
         }
 
         private bool checkForBan(Client client, string channel, string action)
