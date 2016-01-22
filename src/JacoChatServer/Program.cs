@@ -55,6 +55,8 @@ namespace JacoChatServer
                 foreach (KeyValuePair<string, Channel> chan in e.Client.Channels)
                 {
                     chan.Value.Clients.Remove(e.Client.NickName);
+                    if (chan.Value.OpUsers.ContainsKey(e.Client.NickName))
+                        chan.Value.OpUsers.Remove(e.Client.NickName);
                     Handler.SendToChannel(chan.Value, MessageGeneration.GenerateQuit(chan.Value.ChannelName, e.Client.NickName, e.Reason), e.Client);
                 }
                 Server.Clients.Remove(e.Client);

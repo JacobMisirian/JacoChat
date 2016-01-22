@@ -57,5 +57,10 @@ namespace JacoChatServer
         {
             return user + " KICK " + channel + " :" + reason;
         }
+
+        public static string GenerateBan(string user, string channel)
+        {
+            return user + " BAN " + channel;
+        }
     }
 }

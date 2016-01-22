@@ -43,6 +43,9 @@ namespace JacoChatServer
                 case "KICK":
                     KickCommand(client, parts[1], parts[2], substringStringArray(parts, 3));
                     break;
+                case "BAN":
+                    BanCommand(client, parts[1], parts[2]);
+                    break;
             }
         }
 

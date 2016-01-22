@@ -9,6 +9,7 @@ namespace JacoChatServer
         public string ChannelTopic { get; set; }
         public Dictionary<string, Client> Clients { get; private set; }
         public Dictionary<string, Client> OpUsers { get; private set; }
+        public Dictionary<string, Client> BannedUsers { get; private set; }
 
         public Channel(string channelName)
         {
@@ -16,6 +17,7 @@ namespace JacoChatServer
             ChannelTopic = "";
             Clients = new Dictionary<string, Client>();
             OpUsers = new Dictionary<string, Client>();
+            BannedUsers = new Dictionary<string, Client>();
         }
 
         public Channel(string channelName, string channelTopic)
@@ -24,6 +26,7 @@ namespace JacoChatServer
             ChannelTopic = channelTopic;
             Clients = new Dictionary<string, Client>();
             OpUsers = new Dictionary<string, Client>();
+            BannedUsers = new Dictionary<string, Client>();
         }
 
         public Channel(string channelName, string channelTopic, Dictionary<string, Client> clients)
@@ -32,6 +35,7 @@ namespace JacoChatServer
             ChannelTopic = channelTopic;
             Clients = clients;
             OpUsers = new Dictionary<string, Client>();
+            BannedUsers = new Dictionary<string, Client>();
         }
 
         public Channel(string channelName, string channelTopic, Dictionary<string, Client> clients, Dictionary<string, Client> opUsers)
@@ -40,6 +44,7 @@ namespace JacoChatServer
             ChannelTopic = channelTopic;
             Clients = clients;
             OpUsers = opUsers;
+            BannedUsers = new Dictionary<string, Client>();
         }
     }
 }

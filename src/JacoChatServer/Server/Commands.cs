@@ -25,6 +25,9 @@ namespace JacoChatServer
 
         public void PrivmsgCommand(Client client, string reciever, string text)
         {
+            if (checkForBan(client, reciever, "send to"))
+                return;
+
             string message = MessageGeneration.GeneratePRIVMSG(reciever, client.NickName, text);
             if (reciever.StartsWith("#"))
             {
@@ -42,6 +45,9 @@ namespace JacoChatServer
 
         public void JoinCommand(Client client, string chanName)
         {
+            if (checkForBan(client, chanName, "join"))
+                return;
+
             int pos = channelExists(chanName);
             if (pos == -1)
             {
@@ -74,6 +80,8 @@ namespace JacoChatServer
                 SendToUser(client.NickName, MessageGeneration.GenerateError("Not in channel " + chanName), client);
             else
             {
+                if (Channels[pos].OpUsers.ContainsKey(client.NickName))
+                    Channels[pos].OpUsers.Remove(client.NickName);
                 Channels[pos].Clients.Remove(client.NickName);
                 client.Channels.Remove(Channels[pos].ChannelName);
                 SendToChannel(Channels[pos], MessageGeneration.GeneratePart(Channels[pos].ChannelName, client.NickName, reason), client);
@@ -156,6 +164,37 @@ namespace JacoChatServer
                 Channels[pos].Clients.Remove(user);
                 requestedClient.Channels.Remove(channel);
             }
+        }
+
+        public void BanCommand(Client client, string user, string channel)
+        {
+            int pos = channelExists(channel);
+            if (pos == -1)
+                SendToUser(client.NickName, MessageGeneration.GenerateError("No such channel " + channel), client);
+            else if (!Channels[pos].OpUsers.ContainsKey(client.NickName))
+                SendToUser(client.NickName, MessageGeneration.GenerateError("Not an OP in " + channel), client);
+            else if (Channels[pos].BannedUsers.ContainsKey(user))
+                SendToUser(client.NickName, MessageGeneration.GenerateError(user + " is already banned in " + channel), client);
+            else
+            {
+                SendToChannel(Channels[pos], MessageGeneration.GenerateBan(user, channel), client);
+                Channels[pos].BannedUsers.Add(user, Channels[pos].Clients[user]);
+            }
+        }
+
+        private bool checkForBan(Client client, string channel, string action)
+        {
+            int pos = channelExists(channel);
+            if (pos == -1)
+                return false;
+
+            if (Channels[pos].BannedUsers.ContainsKey(client.NickName))
+            {
+                SendToUser(client.NickName, MessageGeneration.GenerateError("Cannot " + action + " channel. Banned"), client);
+                return true;
+            }
+
+            return false;
         }
     }
 }
