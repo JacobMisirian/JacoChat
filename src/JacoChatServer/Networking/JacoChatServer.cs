@@ -48,6 +48,8 @@ namespace JacoChatServer
                     MainClass.ProcessOutput(ex.Message);
                     OnUserDisconnected(new UserDisconnectedEventArgs { Client = client, Reason = ex.Message });
                 }
+
+                Thread.Sleep(20);
             }
         }
 
@@ -62,6 +64,7 @@ namespace JacoChatServer
                         client.Ping = 0;
                     else
                         OnMessageRecieved(new MessageRecievedEventArgs { Client = client, Message = message });
+                    Thread.Sleep(20);
                 }
             }
             catch (IOException ex)

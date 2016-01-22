@@ -48,7 +48,6 @@ namespace JacoChatServer
             if (e.Client != null && e != null)
             {
                 Console.WriteLine(e.Client.NickName + " has disconnected!");
-                Server.Clients.Remove(e.Client);
                 foreach (Channel channel in Handler.Channels)
                 {
                     if (channel.Clients.ContainsValue(e.Client))
@@ -57,6 +56,9 @@ namespace JacoChatServer
                         Handler.SendToChannel(channel, MessageGeneration.GenerateQuit(channel.ChannelName, e.Client.NickName, e.Reason), e.Client);
                     }
                 }
+
+                e.Client.TcpClient.Close();
+                Server.Clients.Remove(e.Client);
             }
         }
 
