@@ -193,7 +193,8 @@ namespace JacoChatServer
 
         public void ListCommand(Client client)
         {
-            SendToUser(client.NickName, MessageGeneration.GenerateList(), client);
+            foreach (Channel chan in Channels)
+                SendToUser(client.NickName, "server LIST " + chan.Clients.Count + " Users. " + chan.ChannelTopic, client);
         }
 
         private bool checkForBan(Client client, string channel, string action)

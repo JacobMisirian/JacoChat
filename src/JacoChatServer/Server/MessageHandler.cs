@@ -14,48 +14,54 @@ namespace JacoChatServer
             client.CountedMilliseconds = client.Time.ElapsedMilliseconds;
             var parts = text.Split(' ');
 
-            if ((client.NickName == null || client.NickName == "") && (parts[0] != "NICK" && parts[0] != "REGISTER"))
+            try
             {
-                client.Send(MessageGeneration.GenerateError("Must set nick first with NICK [NICK] or /NICK [NICK]"));
-                return;
-            }
+                if ((client.NickName == null || client.NickName == "") && (parts[0] != "NICK" && parts[0] != "REGISTER"))
+                {
+                    client.Send(MessageGeneration.GenerateError("Must set nick first with NICK [NICK] or /NICK [NICK]"));
+                    return;
+                }
 
-            switch (parts[0])
+                switch (parts[0])
+                {
+                    case "REGISTER":
+                    case "NICK":
+                        NickCommand(client, parts[1]);
+                        break;
+                    case "PRIVMSG":
+                        PrivmsgCommand(client, parts[1], substringStringArray(parts, 2));
+                        break;
+                    case "JOIN":
+                        JoinCommand(client, parts[1]);
+                        break;
+                    case "PART":
+                        PartCommand(client, parts[1], substringStringArray(parts, 2));
+                        break;
+                    case "NAMES":
+                        NamesCommand(client, parts[1]);
+                        break;
+                    case "TOPIC":
+                        if (parts.Length >= 3)
+                            TopicCommand(client, parts[1], substringStringArray(parts, 2));
+                        else
+                            TopicCommand(client, parts[1]);
+                        break;
+                    case "WHOIS":
+                        WhoisCommand(client, parts[1]);
+                        break;
+                    case "KICK":
+                        KickCommand(client, parts[1], parts[2], substringStringArray(parts, 3));
+                        break;
+                    case "BAN":
+                        BanCommand(client, parts[1], parts[2]);
+                        break;
+                    case "LIST":
+                        ListCommand(client);
+                        break;
+                }
+            }
+            catch (NullReferenceException ex)
             {
-                case "REGISTER":
-                case "NICK":
-                    NickCommand(client, parts[1]);
-                    break;
-                case "PRIVMSG":
-                    PrivmsgCommand(client, parts[1], substringStringArray(parts, 2));
-                    break;
-                case "JOIN":
-                    JoinCommand(client, parts[1]);
-                    break;
-                case "PART":
-                    PartCommand(client, parts[1], substringStringArray(parts, 2));
-                    break;
-                case "NAMES":
-                    NamesCommand(client, parts[1]);
-                    break;
-                case "TOPIC":
-                    if (parts.Length >= 3)
-                        TopicCommand(client, parts[1], substringStringArray(parts, 2));
-                    else
-                        TopicCommand(client, parts[1]);
-                    break;
-                case "WHOIS":
-                    WhoisCommand(client, parts[1]);
-                    break;
-                case "KICK":
-                    KickCommand(client, parts[1], parts[2], substringStringArray(parts, 3));
-                    break;
-                case "BAN":
-                    BanCommand(client, parts[1], parts[2]);
-                    break;
-                case "LIST":
-                    ListCommand(client);
-                    break;
             }
         }
 
