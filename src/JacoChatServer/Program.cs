@@ -17,8 +17,15 @@ namespace JacoChatServer
 
         public static void server_OnMessageRecieved(object sender, MessageRecievedEventArgs e)
         {
-            if (e.Message != null && e != null && e.Message != "")
-                Handler.Handle(e.Client, e.Message);
+            try
+            {
+                if (e.Message != null && e != null && e.Message != "")
+                    Handler.Handle(e.Client, e.Message);
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                e.Client.Send(MessageGeneration.GenerateError("Message not in correct format. " + ex.Message));
+            }
         }
 
         public static void server_OnUserDisconnected(object sender, UserDisconnectedEventArgs e)

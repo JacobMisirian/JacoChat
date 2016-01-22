@@ -47,5 +47,10 @@ namespace JacoChatServer
         {
             return channel.ChannelName + " TOPIC :" + channel.ChannelTopic;
         }
+
+        public static string GenerateWhois(string user, string data)
+        {
+            return "server WHOIS " + user + " :" + data;
+        }
     }
 }

@@ -42,7 +42,7 @@
     <Compile Include="Server\MessageHandler.cs" />
     <Compile Include="Server\Channel.cs" />
     <Compile Include="Protocol\MessageGeneration.cs" />
-    <Compile Include="Server\MessageCompute.cs" />
+    <Compile Include="Server\Commands.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

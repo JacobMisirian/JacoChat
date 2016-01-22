@@ -11,6 +11,7 @@ namespace JacoChatServer
 
         public void Handle(Client client, string text)
         {
+            client.CountedMilliseconds = client.Time.ElapsedMilliseconds;
             var parts = text.Split(' ');
             switch (parts[0])
             {
@@ -35,6 +36,9 @@ namespace JacoChatServer
                         TopicCommand(client, parts[1], substringStringArray(parts, 2));
                     else
                         TopicCommand(client, parts[1]);
+                    break;
+                case "WHOIS":
+                    WhoisCommand(client, parts[1]);
                     break;
             }
         }

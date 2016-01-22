@@ -111,5 +111,27 @@ namespace JacoChatServer
                     SendToUser(client.NickName, MessageGeneration.GenerateError("You are not an OP in " + chanName), client);
             }
         }
+
+        public void WhoisCommand(Client client, string user)
+        {
+            Client requestedClient = null;
+            foreach (Client cli in MainClass.Server.Clients)
+                if (cli.NickName == user)
+                    requestedClient = cli;
+            if (requestedClient == null)
+                SendToUser(client.NickName, MessageGeneration.GenerateError("No such user " + user), client);
+            else
+            {
+                SendToUser(client.NickName, MessageGeneration.GenerateWhois(user, requestedClient.NickName), client);
+                SendToUser(client.NickName, MessageGeneration.GenerateWhois(user, "From: " + requestedClient.IpAddress), client);
+                SendToUser(client.NickName, MessageGeneration.GenerateWhois(user, "Ping: " + requestedClient.Ping), client);
+                SendToUser(client.NickName, MessageGeneration.GenerateWhois(user, "Time: " + requestedClient.Time.Elapsed.ToString()), client);
+                SendToUser(client.NickName, MessageGeneration.GenerateWhois(user, "Idle: " + requestedClient.Idle), client);
+                string channelList = "";
+                foreach (KeyValuePair<string, Channel> chan in requestedClient.Channels)
+                    channelList += chan.Key + " ";
+                SendToUser(client.NickName, MessageGeneration.GenerateWhois(user, "Channels: " + channelList), client);
+            }
+        }
     }
 }
