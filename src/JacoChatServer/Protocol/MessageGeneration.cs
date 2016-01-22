@@ -52,5 +52,10 @@ namespace JacoChatServer
         {
             return "server WHOIS " + user + " :" + data;
         }
+
+        public static string GenerateKick(string user, string channel, string reason)
+        {
+            return user + " KICK " + channel + " :" + reason;
+        }
     }
 }

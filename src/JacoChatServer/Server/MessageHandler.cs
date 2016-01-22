@@ -40,6 +40,9 @@ namespace JacoChatServer
                 case "WHOIS":
                     WhoisCommand(client, parts[1]);
                     break;
+                case "KICK":
+                    KickCommand(client, parts[1], parts[2], substringStringArray(parts, 3));
+                    break;
             }
         }
 

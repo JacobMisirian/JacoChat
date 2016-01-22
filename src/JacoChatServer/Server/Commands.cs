@@ -31,6 +31,8 @@ namespace JacoChatServer
                 int pos = channelExists(reciever);
                 if (pos == -1)
                     SendToUser(client.NickName, MessageGeneration.GenerateError("No such channel " + reciever), client);
+                else if (!client.Channels.ContainsKey(reciever))
+                    SendToUser(client.NickName, MessageGeneration.GenerateError("Not in channel " + reciever), client);
                 else
                     SendToChannel(Channels[pos], MessageGeneration.GeneratePRIVMSG(reciever, client.NickName, text), client);
             }
@@ -47,15 +49,17 @@ namespace JacoChatServer
                 pos = Channels.Count - 1;
                 Channels[pos].OpUsers.Add(client.NickName, client);
             }
-            else if (Channels[pos].Clients.ContainsKey(client.NickName))
+            else if (Channels[pos].Clients.ContainsKey(client.NickName) || client.Channels.ContainsKey(chanName))
             {
                 SendToUser(client.NickName, MessageGeneration.GenerateError("Already in channel " + chanName), client);
                 return;
             }
             if (Channels[pos].OpUsers.Count == 0)
                 Channels[pos].OpUsers.Add(client.NickName, client);
+
             Channels[pos].Clients.Add(client.NickName, client);
             client.Channels.Add(Channels[pos].ChannelName, Channels[pos]);
+
             SendToChannel(Channels[pos], MessageGeneration.GenerateJoin(Channels[pos].ChannelName, client.NickName), client);
             SendToUser(client.NickName, MessageGeneration.GenerateNames(Channels[pos].ChannelName, Channels[pos]), client);
             SendToUser(client.NickName, MessageGeneration.GenerateTopic(Channels[pos]), client);
@@ -108,7 +112,7 @@ namespace JacoChatServer
                     SendToChannel(chan, MessageGeneration.GenerateTopic(chan), client);
                 }
                 else
-                    SendToUser(client.NickName, MessageGeneration.GenerateError("You are not an OP in " + chanName), client);
+                    SendToUser(client.NickName, MessageGeneration.GenerateError("Not an OP in " + chanName), client);
             }
         }
 
@@ -127,10 +131,30 @@ namespace JacoChatServer
                 SendToUser(client.NickName, MessageGeneration.GenerateWhois(user, "Ping: " + requestedClient.Ping), client);
                 SendToUser(client.NickName, MessageGeneration.GenerateWhois(user, "Time: " + requestedClient.Time.Elapsed.ToString()), client);
                 SendToUser(client.NickName, MessageGeneration.GenerateWhois(user, "Idle: " + requestedClient.Idle), client);
+
                 string channelList = "";
                 foreach (KeyValuePair<string, Channel> chan in requestedClient.Channels)
                     channelList += chan.Key + " ";
+
                 SendToUser(client.NickName, MessageGeneration.GenerateWhois(user, "Channels: " + channelList), client);
+            }
+        }
+
+        public void KickCommand(Client client, string user, string channel, string reason)
+        {
+            int pos = channelExists(channel);
+            if (pos == -1)
+                SendToUser(client.NickName, MessageGeneration.GenerateError("No such channel " + channel), client);
+            else if (!Channels[pos].Clients.ContainsKey(user))
+                SendToUser(client.NickName, MessageGeneration.GenerateError("Not in channel " + channel), client);
+            else if (!Channels[pos].OpUsers.ContainsKey(client.NickName))
+                SendToUser(client.NickName, MessageGeneration.GenerateError("Not an OP in " + channel), client);
+            else
+            {
+                Client requestedClient = Channels[pos].Clients[user];
+                SendToChannel(Channels[pos], MessageGeneration.GenerateKick(user, channel, reason), client);
+                Channels[pos].Clients.Remove(user);
+                requestedClient.Channels.Remove(channel);
             }
         }
     }
