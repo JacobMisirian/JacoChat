@@ -47,17 +47,16 @@ namespace JacoChatServer
         {
             if (e.Client != null && e != null)
             {
-                Console.WriteLine(e.Client.NickName + " has disconnected!");
-                foreach (Channel channel in Handler.Channels)
-                {
-                    if (channel.Clients.ContainsValue(e.Client))
-                    {
-                        channel.Clients.Remove(e.Client.NickName);
-                        Handler.SendToChannel(channel, MessageGeneration.GenerateQuit(channel.ChannelName, e.Client.NickName, e.Reason), e.Client);
-                    }
-                }
+                e.Client.SendPing.Abort();
+                e.Client.ListenForMessages.Abort();
 
-                e.Client.TcpClient.Close();
+                ProcessOutput(e.Client.NickName + " has disconnected!");
+
+                foreach (KeyValuePair<string, Channel> chan in e.Client.Channels)
+                {
+                    chan.Value.Clients.Remove(e.Client.NickName);
+                    Handler.SendToChannel(chan.Value, MessageGeneration.GenerateQuit(chan.Value.ChannelName, e.Client.NickName, e.Reason), e.Client);
+                }
                 Server.Clients.Remove(e.Client);
             }
         }

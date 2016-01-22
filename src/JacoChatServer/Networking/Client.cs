@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 namespace JacoChatServer
 {
@@ -23,6 +24,9 @@ namespace JacoChatServer
 
         public string NickName { get; set; }
         public string IpAddress { get { return ((IPEndPoint)TcpClient.Client.RemoteEndPoint).Address.ToString(); } }
+
+        public Thread ListenForMessages { get; set; }
+        public Thread SendPing { get; set; }
 
         public Client(TcpClient client)
         {

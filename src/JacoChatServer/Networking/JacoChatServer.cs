@@ -40,8 +40,11 @@ namespace JacoChatServer
                 {
                     client = new Client(listener.AcceptTcpClient());
                     Clients.Add(client);
-                    new Thread(() => listenForMessagesFromUser(client)).Start();
-                    new Thread(() => sendPing(client)).Start();
+                    client.ListenForMessages = new Thread(() => listenForMessagesFromUser(client));
+                    client.SendPing = new Thread(() => sendPing(client));
+
+                    client.ListenForMessages.Start();
+                    client.SendPing.Start();
                 }
                 catch (IOException ex)
                 {
