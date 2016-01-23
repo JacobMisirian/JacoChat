@@ -125,7 +125,7 @@ namespace JacoChatServer
             else
             {
                 Channel chan = client.Channels[chanName];
-                if (chan.OpUsers.ContainsKey(client.NickName))
+                if (checkPerms(chan, client.NickName))
                 {
                     chan.ChannelTopic = newTopic;
                     SendToChannel(chan, MessageGeneration.GenerateTopic(chan), client, true);
@@ -204,16 +204,17 @@ namespace JacoChatServer
             if (arg != "GIVE" && arg != "TAKE")
             {
                 SendToUser(client.NickName, MessageGeneration.GenerateError("Must supply GIVE or TAKE"), client);
+                return;
             }
 
             int pos = channelExists(channel);
             if (pos == -1)
                 SendToUser(client.NickName, MessageGeneration.GenerateError("No such channel " + channel), client);
-            else if (!Channels[pos].OpUsers.ContainsKey(client.NickName))
+            else if (!checkPerms(Channels[pos], client.NickName))
                 SendToUser(client.NickName, MessageGeneration.GenerateError("Not an OP in " + channel), client);
-            else if (Channels[pos].OpUsers.ContainsKey(user) && arg != "TAKE")
+            else if (checkPerms(Channels[pos], user) && arg != "TAKE")
                 SendToUser(client.NickName, MessageGeneration.GenerateError(user + " is already an OP in " + channel), client);
-            else if (!Channels[pos].OpUsers.ContainsKey(user) && arg != "GIVE")
+            else if (!checkPerms(Channels[pos], user) && arg != "GIVE")
                 SendToUser(client.NickName, MessageGeneration.GenerateError(user + " is not an OP in " + channel), client);
             else if (!Channels[pos].Clients.ContainsKey(client.NickName) || !Channels[pos].Clients.ContainsKey(user))
                 SendToUser(client.NickName, MessageGeneration.GenerateError("Not in channel " + channel), client);
