@@ -62,5 +62,10 @@ namespace JacoChatServer
         {
             return user + " BAN " + channel;
         }
+
+        public static string GenerateChanOp(string user, string channel, string arg, string giver)
+        {
+            return giver + " CHANOP " + channel + " " + user + " :" + arg;
+        }
     }
 }

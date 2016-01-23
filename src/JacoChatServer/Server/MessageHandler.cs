@@ -58,6 +58,9 @@ namespace JacoChatServer
                     case "LIST":
                         ListCommand(client);
                         break;
+                    case "CHANOP":
+                        ChanOpCommand(client, parts[1], parts[2], parts[3]);
+                        break;
                 }
             }
             catch (NullReferenceException ex)
@@ -103,6 +106,14 @@ namespace JacoChatServer
         {
             for (int i = 0; i < Channels.Count; i++)
                 if (Channels[i].ChannelName == chanName)
+                    return i;
+            return -1;
+        }
+
+        private int clientExists(string clientName)
+        {
+            for (int i = 0; i < MainClass.Server.Clients.Count; i++)
+                if (MainClass.Server.Clients[i].NickName == clientName)
                     return i;
             return -1;
         }
