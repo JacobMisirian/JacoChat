@@ -10,6 +10,7 @@ namespace JacoChatServer
         public static MessageHandler Handler = new MessageHandler();
 
         public static JacoChatConfiguration Config;
+        private static StreamWriter logWriter { get; set; }
 
         public static void Main(string[] args)
         {
@@ -21,6 +22,9 @@ namespace JacoChatServer
 
             Config = new JacoChatConfigurationReader(args[0]).Read();
 
+            if (Config.OutputMode == OutputMode.FilePath)
+                logWriter = new StreamWriter(Config.OutputFilePath);
+
             Server.Listen(Config.HostIp, Config.Port);
             Server.MessageRecieved += server_OnMessageRecieved;
             Server.UserDisconnected += server_OnUserDisconnected;
@@ -31,7 +35,11 @@ namespace JacoChatServer
             try
             {
                 if (e.Message != null && e != null && e.Message != "")
+                {
                     Handler.Handle(e.Client, e.Message);
+                    if (e.Client.NickName != null && e.Client.NickName != "")
+                        ProcessOutput(e.Client.NickName + ": " + e.Message);
+                }
             }
             catch (IndexOutOfRangeException ex)
             {
@@ -67,7 +75,10 @@ namespace JacoChatServer
         public static void ProcessOutput(string output)
         {
             if (Config.OutputMode == OutputMode.FilePath)
-                File.AppendAllText(Config.OutputFilePath, output);
+            {
+                logWriter.WriteLine(output);
+                logWriter.Flush();
+            }
             else
                 Console.WriteLine(output);
         }
