@@ -1,18 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="JacoChatServer/Server/MessageHandler.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="JacoChatServer/Protocol/MessageGeneration.cs">
     <Files>
-      <File FileName="JacoChatServer/Protocol/MessageGeneration.cs" Line="62" Column="10" />
-      <File FileName="JacoChatServer/Server/MessageHandler.cs" Line="64" Column="14" />
-      <File FileName="JacoChatServer/Server/Commands.cs" Line="143" Column="27" />
-      <File FileName="JacoChatServer/Program.cs" Line="24" Column="55" />
+      <File FileName="JacoChatServer/Program.cs" Line="57" Column="9" />
+      <File FileName="JacoChatServer/Protocol/MessageGeneration.cs" Line="52" Column="10" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="JacoChatConfigGenerator" selected="True" />
           <Node name="JacoChatServer" expanded="True">
-            <Node name="Protocol" expanded="True" />
+            <Node name="Networking" expanded="True" />
+            <Node name="Protocol" expanded="True">
+              <Node name="MessageGeneration.cs" selected="True" />
+            </Node>
             <Node name="Server" expanded="True" />
           </Node>
         </State>

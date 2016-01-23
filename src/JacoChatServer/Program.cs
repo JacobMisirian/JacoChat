@@ -47,6 +47,9 @@ namespace JacoChatServer
         {
             if (e.Client != null && e != null)
             {
+                if (!Server.Clients.Contains(e.Client))
+                    return;
+
                 ProcessOutput(e.Client.NickName + " has disconnected!");
 
                 foreach (KeyValuePair<string, Channel> chan in e.Client.Channels)
@@ -56,8 +59,6 @@ namespace JacoChatServer
                     if (chan.Value.OpUsers.ContainsKey(chan.Key))
                         chan.Value.OpUsers.Remove(chan.Key);
                 }
-
-              
 
                 Server.Clients.Remove(e.Client);
             }
