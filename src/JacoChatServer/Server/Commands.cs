@@ -75,7 +75,7 @@ namespace JacoChatServer
             Channels[pos].Clients.Add(client.NickName, client);
             client.Channels.Add(Channels[pos].ChannelName, Channels[pos]);
 
-            SendToChannel(Channels[pos], MessageGeneration.GenerateJoin(Channels[pos].ChannelName, client.NickName), client);
+            SendToChannel(Channels[pos], MessageGeneration.GenerateJoin(Channels[pos].ChannelName, client.NickName), client, true);
             SendToUser(client.NickName, MessageGeneration.GenerateNames(Channels[pos].ChannelName, Channels[pos]), client);
             SendToUser(client.NickName, MessageGeneration.GenerateTopic(Channels[pos]), client);
         }

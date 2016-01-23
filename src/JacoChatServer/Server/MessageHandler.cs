@@ -65,12 +65,12 @@ namespace JacoChatServer
             }
         }
 
-        public void SendToChannel(Channel channel, string message, Client sender)
+        public void SendToChannel(Channel channel, string message, Client sender, bool sendToSender = false)
         {
             try
             {
                 foreach (KeyValuePair<string, Client> client in channel.Clients)
-                    if (client.Value.NickName != sender.NickName)
+                    if (client.Value.NickName != sender.NickName || sendToSender)
                         SendToUser(client.Value.NickName, message, sender);
             }
             catch (IOException ex)
