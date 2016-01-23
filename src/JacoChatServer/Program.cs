@@ -47,18 +47,18 @@ namespace JacoChatServer
         {
             if (e.Client != null && e != null)
             {
-                e.Client.SendPing.Abort();
-                e.Client.ListenForMessages.Abort();
-
                 ProcessOutput(e.Client.NickName + " has disconnected!");
 
                 foreach (KeyValuePair<string, Channel> chan in e.Client.Channels)
                 {
+                    Handler.SendToChannel(chan.Value, MessageGeneration.GenerateQuit(chan.Key, e.Client.NickName, "Ping Timeout: 10 seconds."), e.Client);
                     chan.Value.Clients.Remove(e.Client.NickName);
-                    if (chan.Value.OpUsers.ContainsKey(e.Client.NickName))
-                        chan.Value.OpUsers.Remove(e.Client.NickName);
-                    Handler.SendToChannel(chan.Value, MessageGeneration.GenerateQuit(chan.Value.ChannelName, e.Client.NickName, e.Reason), e.Client);
+                    if (chan.Value.OpUsers.ContainsKey(chan.Key))
+                        chan.Value.OpUsers.Remove(chan.Key);
                 }
+
+              
+
                 Server.Clients.Remove(e.Client);
             }
         }
