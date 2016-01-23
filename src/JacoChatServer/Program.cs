@@ -56,8 +56,8 @@ namespace JacoChatServer
                 {
                     Handler.SendToChannel(chan.Value, MessageGeneration.GenerateQuit(chan.Key, e.Client.NickName, "Ping Timeout: 10 seconds."), e.Client);
                     chan.Value.Clients.Remove(e.Client.NickName);
-                    if (chan.Value.OpUsers.ContainsKey(chan.Key))
-                        chan.Value.OpUsers.Remove(chan.Key);
+                    if (chan.Value.OpUsers.ContainsKey(e.Client.NickName))
+                        chan.Value.OpUsers.Remove(e.Client.NickName);
                 }
 
                 Server.Clients.Remove(e.Client);
