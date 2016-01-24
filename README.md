@@ -60,6 +60,20 @@ For example:
 PART #int0x10 Programming is for nerds
 ```
 
+### PRIVMSG
+The privmsg command sends a message to a user or channel and 
+is the primary method of communicating in JacoChat. You can
+either send to a channel where everyone can see the message
+or you can send it to a specific user in the form of a PM.
+
+Format:
+```
+PRIVMSG [#[CHANNEL]/[USER]] [MESSAGE]
+```
+
+For example:
+PRIVMSG #int0x10 Hello, World!
+
 ### NAMES
 The names command requests the server to send you a list of
 names of the users in the current channel. The server will
