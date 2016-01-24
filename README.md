@@ -199,3 +199,169 @@ Format and example:
 ```
 LIST
 ```
+
+## JacoChat Protocol: Server to Client
+This section covers the types and format of messages that
+a JacoChat server would send to a client.
+
+### PRIVMSG
+The privmsg command denotates that someone has sent your client
+a message either from sending it to a channel you are in or
+by sending it to you directly as a PM.
+
+Format:
+```
+[SENDER] PRIVMSG [#[CHANNEL]/[USER]] :[MESSAGE]
+```
+
+For example:
+```
+reagan PRIVMSG #int0x10 :Hello, World!
+```
+
+### JOIN
+The join command is sent whenever a user joins a channel that
+you are in (including when you join that channel).
+
+Format:
+```
+[USER] JOIN #[CHANNEL]
+```
+
+For example:
+```
+OverlordSatan JOIN #pptosn
+```
+
+### PART
+The part command is sent whenever a user leaves a channel that
+you are in.
+
+Format:
+```
+[USER] PART #[CHANNEL] :[REASON]
+```
+
+For example:
+```
+keeperOfTime PART #int0x10 :I quit
+```
+
+### NICK
+The nick command is sent whenever a user (including yourself)
+changes their nickname in a channel you are in.
+
+Format:
+```
+[OLD_NICK] NICK #[CHANNEL] [NEW_NICK]
+```
+
+For example:
+```
+Reagan NICK #int0x10 TheReaganKeeper
+```
+
+### QUIT
+The quit command is sent whenever a user that was in a channel
+that you are in kills their connection to the server.
+
+Format:
+```
+[USER] QUIT #[CHANNEL] :[REASON]
+```
+
+For example:
+```
+tiezerk QUIT #int0x10 :Ping timeout: 10 seconds
+```
+
+### TOPIC
+The topic command is sent when your client joins a channel, whenever
+that client specifically requests the topic using the TOPIC
+Client to Server command, or when a channel OP changes the
+topic of the channel.
+
+Format:
+```
+server TOPIC #[CHANNEL] :[TOPIC]
+```
+
+For example:
+```
+server TOPIC #auroragate :Where is he?
+```
+
+### KICK
+The kick command is sent whenever a channel OP kicks a user
+from a channel you are in.
+
+Format:
+```
+[USER] KICK #[CHANNEL] :[REASON]
+```
+
+For example:
+```
+Aviv KICK #vbosn :Do not.
+```
+
+### BAN
+The ban command is sent whenever a channel OP bans a user
+from a channel you are in.
+
+Format:
+```
+[USER] BAN #[CHANNEL]
+```
+
+For example:
+```
+Fabtop BAN #hassium
+```
+
+### WHOIS
+The whois command is sent whenever a client requests
+user information using a Client to Server WHOIS command.
+It is important to note that the server sends out several
+whois commands are sent out foreach request, one foreach
+catagory of a whois.
+
+Format:
+```
+server WHOIS [USER] :[DATA]
+```
+
+For example:
+```
+server WHOIS nalz :From: 127.0.0.1
+```
+
+### CHANOP
+The chanop command is sent whenever a client that is
+in the same channel as you (or you) has had their channel
+operator given or taken.
+
+Format:
+```
+[OP_NICK] CHANOP #[CHANNEL] [USER] :[GIVE/TAKE]
+```
+
+For example:
+```
+Viper CHANOP #int0x10 Tiezerk :GIVE
+```
+
+
+### ERROR
+The error command is sent whenever you have tried to send
+something invalid or do something invalid.
+
+Format:
+```
+server ERROR :[MESSAGE]
+```
+
+For example:
+```
+server ERROR :No such channel #FrenchMilitaryVictories
+```
