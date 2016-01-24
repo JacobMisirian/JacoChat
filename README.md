@@ -7,7 +7,7 @@ server application written in C# that mimicks that of IRC.
 This section covers the different commmands and format of messages
 that a JacoChat client would send to a JacoChat server.
 
-### JOIN
+### NICK
 The nick command must and should be the first thing that is sent
 to the server upon a client connect. It gives the server a way
 to identify the client and allow them to join a channel, etc.
