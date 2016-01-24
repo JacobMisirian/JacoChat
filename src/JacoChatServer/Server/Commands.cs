@@ -25,7 +25,7 @@ namespace JacoChatServer
             {
                 foreach (KeyValuePair<string, Channel> chan in client.Channels)
                 {
-                    SendToChannel(chan.Value, MessageGeneration.GenerateNick(chan.Key, oldNick, newNick), client);
+                    SendToChannel(chan.Value, MessageGeneration.GenerateNick(chan.Key, oldNick, newNick), client, true);
                     chan.Value.Clients.Remove(oldNick);
                     chan.Value.Clients.Add(newNick, client);
                     if (chan.Value.OpUsers.ContainsKey(oldNick))
