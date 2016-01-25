@@ -2,6 +2,7 @@
 
 JacoChat is a text based chat protocol in the format of a client
 server application written in C# that mimicks that of IRC.
+[JacoChat Library Documentation](http://misiriansoft.com/JacoChatDocs)
 
 ## JacoChat Protocol: Client to Server
 This section covers the different commmands and format of messages
