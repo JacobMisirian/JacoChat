@@ -16,6 +16,20 @@ namespace JacoChatClient
         private StreamReader input;
 
         /// <summary>
+        /// Initializes new JacoChatClient.
+        /// </summary>
+        public JacoChatClient() { }
+        /// <summary>
+        /// Initializes new JacoChatClient and connects to the ip and port.
+        /// </summary>
+        /// <param name="ip">The address to connect to.</param>
+        /// <param name="port">The port number.</param>
+        public JacoChatClient(string ip, int port)
+        {
+            Connect(ip, port);
+        }
+
+        /// <summary>
         /// Connects to the server on ip and port.
         /// </summary>
         /// <param name="ip">The address to connect to.</param>
