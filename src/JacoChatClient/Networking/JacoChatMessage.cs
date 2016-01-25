@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace JacoChatClient
 {
@@ -75,6 +75,18 @@ namespace JacoChatClient
                     channel = parts[2];
                     body = message.Substring(message.IndexOf(":") + 1);
                     break;
+                case "WHOIS":
+                    type = JacoChatMessageType.WHOIS;
+                    sender = parts[0];
+                    channel = parts[2];
+                    body = message.Substring(message.IndexOf(":") + 1);
+                    break;
+                case "KICK":
+                    type = JacoChatMessageType.KICK;
+                    sender = parts[0];
+                    channel = parts[2];
+                    body = message.Substring(message.IndexOf(":") + 1);
+                    break;
                 default:
                     type = JacoChatMessageType.UNKNOWN;
                     sender = "";
@@ -97,7 +109,8 @@ namespace JacoChatClient
         TOPIC,
         ERROR,
         UNKNOWN,
-        NAMES
+        NAMES,
+        WHOIS,
+        KICK
     }
 }
-

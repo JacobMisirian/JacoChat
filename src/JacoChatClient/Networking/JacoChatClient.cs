@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -38,7 +38,7 @@ namespace JacoChatClient
                     output.Flush();
                 }
                 else
-                    OnMessageRecieved(new MessageRecievedEventArgs { Message = responseData } );
+                    OnMessageRecieved(new MessageRecievedEventArgs { Message = responseData });
             }
         }
 
@@ -57,4 +57,3 @@ namespace JacoChatClient
         public Int32 Bytes { get { return Message.Length; } }
     }
 }
-
