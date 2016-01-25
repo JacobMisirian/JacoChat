@@ -62,6 +62,12 @@ namespace JacoChatServer
             if (checkForBan(client, chanName, "join"))
                 return;
 
+            if (!chanName.StartsWith("#"))
+            {
+                SendToUser(client.NickName, MessageGeneration.GenerateError("Not valid channel " + chanName), client);
+                return;
+            }
+
             int pos = channelExists(chanName);
             if (pos == -1)
             {
