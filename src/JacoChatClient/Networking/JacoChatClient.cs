@@ -145,6 +145,13 @@ namespace JacoChatClient
         {
             SendRaw("CHANOP " + user + " " + channel + " " + giveTake);
         }
+        /// <summary>
+        /// Requests the server to send a list of channels and information.
+        /// </summary>
+        public void GetList()
+        {
+            SendRaw("LIST");
+        }
 
         private void beginListening()
         {
@@ -201,6 +208,9 @@ namespace JacoChatClient
                             break;
                         case JacoChatMessageType.WHOIS:
                             OnWhoisRecieved(new WhoisRecievedEventArgs { User = msg.Sender, Whois = msg.Body });
+                            break;
+                        case JacoChatMessageType.LIST:
+                            OnListRecieved(new ListRecievedEventArgs { Data = msg.Body });
                             break;
                     }
                 }
@@ -299,6 +309,15 @@ namespace JacoChatClient
         protected virtual void OnChanOpRecieved(ChanOpRecievedEventArgs e)
         {
             EventHandler<ChanOpRecievedEventArgs> handler = ChanOpRecieved;
+            if (handler != null)
+                handler(this, e);
+        }
+
+
+        public event EventHandler<ListRecievedEventArgs> ListRecieved;
+        protected virtual void OnListRecieved(ListRecievedEventArgs e)
+        {
+            EventHandler<ListRecievedEventArgs> handler = ListRecieved;
             if (handler != null)
                 handler(this, e);
         }

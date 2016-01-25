@@ -99,6 +99,12 @@ namespace JacoChatClient
                     channel = parts[2];
                     body = parts[4];
                     break;
+                case "LIST":
+                    type = JacoChatMessageType.LIST;
+                    sender = "";
+                    channel = "";
+                    body = message.Substring(message.IndexOf(":") + 1);
+                    break;
                 default:
                     type = JacoChatMessageType.UNKNOWN;
                     sender = "";
@@ -125,6 +131,7 @@ namespace JacoChatClient
         WHOIS,
         KICK,
         BAN,
-        CHANOP
+        CHANOP,
+        LIST
     }
 }

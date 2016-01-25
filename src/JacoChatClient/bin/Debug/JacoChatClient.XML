@@ -104,5 +104,10 @@
             <param name="channel">The channel the user is in.</param>
             <param name="giveTake">Must be "GIVE" or "TAKE".</param>
         </member>
+        <member name="M:JacoChatClient.JacoChatClient.GetList">
+            <summary>
+            Requests the server to send a list of channels and information.
+            </summary>
+        </member>
     </members>
 </doc>

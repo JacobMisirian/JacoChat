@@ -1,0 +1,5 @@
+C:\Users\misiriaj\JacoChat\src\JacoChatConfigGenerator\bin\Debug\JacoChatConfigGenerator.exe
+C:\Users\misiriaj\JacoChat\src\JacoChatConfigGenerator\bin\Debug\JacoChatConfigGenerator.pdb
+C:\Users\misiriaj\JacoChat\src\JacoChatConfigGenerator\obj\x86\Debug\JacoChatConfigGenerator.csprojResolveAssemblyReference.cache
+C:\Users\misiriaj\JacoChat\src\JacoChatConfigGenerator\obj\x86\Debug\JacoChatConfigGenerator.exe
+C:\Users\misiriaj\JacoChat\src\JacoChatConfigGenerator\obj\x86\Debug\JacoChatConfigGenerator.pdb

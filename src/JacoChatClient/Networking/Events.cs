@@ -85,6 +85,11 @@ namespace JacoChatClient
         public string GivenTaken { get; set; }
     }
 
+    public class ListRecievedEventArgs : EventArgs
+    {
+        public string Data { get; set; }
+    }
+
     public class ErrorRecievedEventArgs : EventArgs
     {
         public string Error { get; set; }
