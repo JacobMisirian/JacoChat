@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JacoChatClient</name>
+    </assembly>
+    <members>
+        <member name="T:JacoChatClient.JacoChatClient">
+            <summary>
+            Class for connecting, sending, and recieving with a JacoChat Server.
+            </summary>
+        </member>
+        <member name="M:JacoChatClient.JacoChatClient.Connect(System.String,System.Int32)">
+            <summary>
+            Connects to the server on ip and port.
+            </summary>
+            <param name="ip">The address to connect to.</param>
+            <param name="port">The port number.</param>
+        </member>
+        <member name="M:JacoChatClient.JacoChatClient.SendRaw(System.String)">
+            <summary>
+            Directly writes the message to the output stream.
+            </summary>
+            <param name="message">The message to write.</param>
+        </member>
+        <member name="M:JacoChatClient.JacoChatClient.SendPrivmsg(System.String,System.String,System.Object[])">
+            <summary>
+            Sends a privmsg to a channel with a format specifier.
+            </summary>
+            <param name="channel">The channel to send to.</param>
+            <param name="format">The format string.</param>
+            <param name="args"></param>
+        </member>
+        <member name="M:JacoChatClient.JacoChatClient.SendPrivmsg(System.String,System.String)">
+            <summary>
+            Sends a privmsg to a channel.
+            </summary>
+            <param name="message">The message to send.</param>
+            <param name="channel">The channel to send to.</param>
+        </member>
+        <member name="M:JacoChatClient.JacoChatClient.JoinChannel(System.String)">
+            <summary>
+            Joins the channel.
+            </summary>
+            <param name="channel">The channel to join.</param>
+        </member>
+        <member name="M:JacoChatClient.JacoChatClient.PartChannel(System.String,System.String)">
+            <summary>
+            Parts from the channel with an option reason.
+            </summary>
+            <param name="channel">The channel to part.</param>
+            <param name="reason">The reason for parting.</param>
+        </member>
+        <member name="M:JacoChatClient.JacoChatClient.GetTopic(System.String)">
+            <summary>
+            Requests the server to send the topic for the channel.
+            </summary>
+            <param name="channel">The channel to get the topic for.</param>
+        </member>
+        <member name="M:JacoChatClient.JacoChatClient.SetTopic(System.String,System.String)">
+            <summary>
+            Sets the topic of a channel (must have ChanOp privileges).
+            </summary>
+            <param name="channel">The channel to change.</param>
+            <param name="topic">The new topic.</param>
+        </member>
+        <member name="M:JacoChatClient.JacoChatClient.Whois(System.String)">
+            <summary>
+            Requests the server to send back WHOIS data on a user.
+            </summary>
+            <param name="user">The user to WHOIS.</param>
+        </member>
+        <member name="M:JacoChatClient.JacoChatClient.ChangeNick(System.String)">
+            <summary>
+            Changes your nickname.
+            </summary>
+            <param name="newNick">The new nickname.</param>
+        </member>
+        <member name="M:JacoChatClient.JacoChatClient.GetNames(System.String)">
+            <summary>
+            Requests the server to send a names list for a channel.
+            </summary>
+            <param name="channel">The channel to get names for.</param>
+        </member>
+        <member name="M:JacoChatClient.JacoChatClient.KickUser(System.String,System.String,System.String)">
+            <summary>
+            Kicks a user from a channel (must have ChanOp privileges).
+            </summary>
+            <param name="user">The user to kick.</param>
+            <param name="channel">The channel to kick the user from.</param>
+            <param name="reason">The reason the user is being kicked.</param>
+        </member>
+        <member name="M:JacoChatClient.JacoChatClient.BanUser(System.String,System.String)">
+            <summary>
+            Bans a user from the channel.
+            </summary>
+            <param name="user">The user to ban.</param>
+            <param name="channel">The channel to ban the user from.</param>
+        </member>
+        <member name="M:JacoChatClient.JacoChatClient.ChangeChanOp(System.String,System.String,System.String)">
+            <summary>
+            Changes the channel op privileges of a user in a channel  (must have ChanOp privileges).
+            </summary>
+            <param name="user">The user to change.</param>
+            <param name="channel">The channel the user is in.</param>
+            <param name="giveTake">Must be "GIVE" or "TAKE".</param>
+        </member>
+    </members>
+</doc>

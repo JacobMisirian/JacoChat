@@ -1,0 +1,9 @@
+C:\Users\misiriaj\JacoChat\src\JacoChatClient\obj\Debug\JacoChatClient.csprojResolveAssemblyReference.cache
+C:\Users\misiriaj\JacoChat\src\JacoChatClient\bin\Debug\JacoChatClient.exe.config
+C:\Users\misiriaj\JacoChat\src\JacoChatClient\bin\Debug\JacoChatClient.exe
+C:\Users\misiriaj\JacoChat\src\JacoChatClient\bin\Debug\JacoChatClient.pdb
+C:\Users\misiriaj\JacoChat\src\JacoChatClient\bin\Debug\System.Net.Http.dll
+C:\Users\misiriaj\JacoChat\src\JacoChatClient\bin\Debug\System.Net.Http.xml
+C:\Users\misiriaj\JacoChat\src\JacoChatClient\obj\Debug\JacoChatClient.exe
+C:\Users\misiriaj\JacoChat\src\JacoChatClient\obj\Debug\JacoChatClient.pdb
+C:\Users\misiriaj\JacoChat\src\JacoChatClient\bin\Debug\JacoChatClient.XML

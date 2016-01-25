@@ -87,6 +87,18 @@ namespace JacoChatClient
                     channel = parts[2];
                     body = message.Substring(message.IndexOf(":") + 1);
                     break;
+                case "BAN":
+                    type = JacoChatMessageType.BAN;
+                    sender = parts[0];
+                    channel = parts[2];
+                    body = parts[2];
+                    break;
+                case "CHANOP":
+                    type = JacoChatMessageType.CHANOP;
+                    sender = parts[3];
+                    channel = parts[2];
+                    body = parts[4];
+                    break;
                 default:
                     type = JacoChatMessageType.UNKNOWN;
                     sender = "";
@@ -111,6 +123,8 @@ namespace JacoChatClient
         UNKNOWN,
         NAMES,
         WHOIS,
-        KICK
+        KICK,
+        BAN,
+        CHANOP
     }
 }

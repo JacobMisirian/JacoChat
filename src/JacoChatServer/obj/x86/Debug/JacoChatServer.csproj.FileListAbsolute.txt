@@ -1,0 +1,5 @@
+C:\Users\misiriaj\JacoChat\src\JacoChatServer\bin\Debug\JacoChatServer.exe
+C:\Users\misiriaj\JacoChat\src\JacoChatServer\bin\Debug\JacoChatServer.pdb
+C:\Users\misiriaj\JacoChat\src\JacoChatServer\obj\x86\Debug\JacoChatServer.csprojResolveAssemblyReference.cache
+C:\Users\misiriaj\JacoChat\src\JacoChatServer\obj\x86\Debug\JacoChatServer.exe
+C:\Users\misiriaj\JacoChat\src\JacoChatServer\obj\x86\Debug\JacoChatServer.pdb
