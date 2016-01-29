@@ -2,13 +2,38 @@
 
 namespace JacoChatClient
 {
+    /// <summary>
+    /// JacoChat message.
+    /// </summary>
     public class JacoChatMessage
     {
+        /// <summary>
+        /// Gets the type of the jaco chat message.
+        /// </summary>
+        /// <value>The type of the jaco chat message.</value>
         public JacoChatMessageType JacoChatMessageType { get; private set; }
+        /// <summary>
+        /// Gets the sender.
+        /// </summary>
+        /// <value>The sender.</value>
         public string Sender { get; private set; }
+        /// <summary>
+        /// Gets the channel.
+        /// </summary>
+        /// <value>The channel.</value>
         public string Channel { get; private set; }
+        /// <summary>
+        /// Gets the body.
+        /// </summary>
+        /// <value>The body.</value>
         public string Body { get; private set; }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JacoChatClient.JacoChatMessage"/> class.
+        /// </summary>
+        /// <param name="type">Type.</param>
+        /// <param name="sender">Sender.</param>
+        /// <param name="channel">Channel.</param>
+        /// <param name="body">Body.</param>
         public JacoChatMessage(JacoChatMessageType type, string sender, string channel, string body)
         {
             JacoChatMessageType = type;
@@ -16,7 +41,10 @@ namespace JacoChatClient
             Channel = channel;
             Body = body;
         }
-
+        /// <summary>
+        /// Parse the specified message.
+        /// </summary>
+        /// <param name="message">Message.</param>
         public static JacoChatMessage Parse(string message)
         {
             string[] parts = message.Split(' ');
@@ -123,6 +151,9 @@ namespace JacoChatClient
         }
     }
 
+    /// <summary>
+    /// Jaco chat message type.
+    /// </summary>
     public enum JacoChatMessageType
     {
         PRIVMSG,
