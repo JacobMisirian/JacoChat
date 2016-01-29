@@ -139,6 +139,12 @@ namespace JacoChatClient
                     channel = "";
                     body = message.Substring(message.IndexOf(":") + 1);
                     break;
+                case "MOTD":
+                    type = JacoChatMessageType.MOTD;
+                    sender = parts[0];
+                    channel = parts[0];
+                    body = message.Substring(message.IndexOf(":") + 1);
+                    break;
                 default:
                     type = JacoChatMessageType.UNKNOWN;
                     sender = "";
@@ -170,6 +176,7 @@ namespace JacoChatClient
         BAN,
         UNBAN,
         CHANOP,
-        LIST
+        LIST,
+        MOTD
     }
 }

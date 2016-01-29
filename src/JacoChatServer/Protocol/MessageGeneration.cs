@@ -72,5 +72,10 @@ namespace JacoChatServer
         {
             return giver + " CHANOP " + channel + " " + user + " :" + arg;
         }
+
+        public static string GenerateMotd(string line)
+        {
+            return "server MOTD :" + line;
+        }
     }
 }

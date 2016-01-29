@@ -44,6 +44,7 @@ namespace JacoChatServer
 
                     client.ListenForMessages.Start();
                     client.SendPing.Start();
+                    OnUserConnected(new UserConnectedEventArgs { Client = client });
                 }
                 catch (IOException ex)
                 {
@@ -104,10 +105,10 @@ namespace JacoChatServer
                 handler(this, e);
         }
 
-        public event EventHandler<UserJoinedEventArgs> UserJoined;
-        protected virtual void OnUserJoined(UserJoinedEventArgs e)
+        public event EventHandler<UserConnectedEventArgs> UserConnected;
+        protected virtual void OnUserConnected(UserConnectedEventArgs e)
         {
-            EventHandler<UserJoinedEventArgs> handler = UserJoined;
+            EventHandler<UserConnectedEventArgs> handler = UserConnected;
             if (handler != null)
                 handler(this, e);
         }
@@ -128,7 +129,7 @@ namespace JacoChatServer
         public Client Client { get; set; }
     }
 
-    public class UserJoinedEventArgs : EventArgs
+    public class UserConnectedEventArgs : EventArgs
     {
         public Client Client { get; set; }
     }

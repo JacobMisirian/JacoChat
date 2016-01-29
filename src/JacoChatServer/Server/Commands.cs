@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace JacoChatServer
 {
@@ -248,6 +249,12 @@ namespace JacoChatServer
                 else
                     Channels[pos].OpUsers.Remove(user);
             }
+        }
+
+        public void MotdCommand(Client client, string motdPath)
+        {
+            foreach (string line in File.ReadAllLines(motdPath))
+                client.Send(MessageGeneration.GenerateMotd(line));
         }
 
         private void removeUser(Client client, Channel channel)

@@ -38,6 +38,10 @@ namespace JacoChatConfigGenerator
             string outputPath = Console.ReadLine();
             Console.Clear();
 
+            Console.Write("Enter the path that contains the server's MOTD.\n\n<MOTD_PATH>");
+            string motd = Console.ReadLine();
+            Console.Clear();
+
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("# Created with JacoChatConfigGenerator.exe. https://github.com/JacobMisirian/JacoChat");
             sb.AppendLine("# This is the host ip for the server.");
@@ -46,6 +50,8 @@ namespace JacoChatConfigGenerator
             sb.AppendLine("Port " + port);
             sb.AppendLine("# This is the output mode for debugger output.");
             sb.AppendLine("OutputMode " + outputMode);
+            sb.AppendLine("# This is the path where the MOTD can be found.");
+            sb.AppendLine("Motd " + motd);
 
             File.WriteAllText(outputPath, sb.ToString());
         }

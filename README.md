@@ -394,3 +394,19 @@ For example:
 ```
 server ERROR :No such channel #FrenchMilitaryVictories
 ```
+
+### MOTD
+The motd command is sent when a user connects to the server. For
+each line in the MOTD the server will send a command with that line.
+
+Format:
+```
+server MOTD :[MESSAGE]
+```
+
+For example:
+```
+server MOTD :Welcome to JacoChat
+server MOTD :Go to https://github.com/JacobMisirian/JacoChat for source.
+server MOTD :For another good project go to http://hassiumlang.com
+```

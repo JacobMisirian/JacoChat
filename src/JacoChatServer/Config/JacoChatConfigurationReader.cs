@@ -23,6 +23,7 @@ namespace JacoChatServer
             config.OutputMode = OutputMode.StdOut;
             config.HostIp = "127.0.0.1";
             config.Port = 1337;
+            config.MotdPath = "";
 
             for (int i = 0; i < contents.Length; i++)
             {
@@ -47,6 +48,9 @@ namespace JacoChatServer
                         break;
                     case "Port":
                         config.Port = Convert.ToInt32(parts[1]);
+                        break;
+                    case "Motd":
+                        config.MotdPath = parts[1];
                         break;
                 }
             }

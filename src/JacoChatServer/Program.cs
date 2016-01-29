@@ -28,6 +28,7 @@ namespace JacoChatServer
             Server.Listen(Config.HostIp, Config.Port);
             Server.MessageRecieved += server_OnMessageRecieved;
             Server.UserDisconnected += server_OnUserDisconnected;
+            Server.UserConnected += server_OnUserConnected;
         }
 
         public static void server_OnMessageRecieved(object sender, MessageRecievedEventArgs e)
@@ -70,6 +71,12 @@ namespace JacoChatServer
 
                 Server.Clients.Remove(e.Client);
             }
+        }
+
+        public static void server_OnUserConnected(object sender, UserConnectedEventArgs e)
+        {
+            if (e.Client != null && e != null && Config.MotdPath != "")
+                Handler.MotdCommand(e.Client, Config.MotdPath);
         }
 
         public static void ProcessOutput(string output)

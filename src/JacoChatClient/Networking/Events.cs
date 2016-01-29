@@ -138,4 +138,11 @@ namespace JacoChatClient
     {
         public string Message { get; set; }
     }
+    /// <summary>
+    /// Motd recieved event arguments.
+    /// </summary>
+    public class MotdRecievedEventArgs : EventArgs
+    {
+        public string Line { get; set; }
+    }
 }

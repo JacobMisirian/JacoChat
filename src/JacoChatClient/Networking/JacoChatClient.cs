@@ -229,6 +229,9 @@ namespace JacoChatClient
                         case JacoChatMessageType.LIST:
                             OnListRecieved(new ListRecievedEventArgs { Data = msg.Body });
                             break;
+                        case JacoChatMessageType.MOTD:
+                            OnMotdRecieved(new MotdRecievedEventArgs { Line = msg.Body });
+                            break;
                     }
                 }
             }
@@ -359,6 +362,14 @@ namespace JacoChatClient
         protected virtual void OnUnknownRecieved(UnknownRecievedEventArgs e)
         {
             EventHandler<UnknownRecievedEventArgs> handler = UnknownRecieved;
+            if (handler != null)
+                handler(this, e);
+        }
+
+        public event EventHandler<MotdRecievedEventArgs> MotdRecieved;
+        protected virtual void OnMotdRecieved(MotdRecievedEventArgs e)
+        {
+            EventHandler<MotdRecievedEventArgs> handler = MotdRecieved;
             if (handler != null)
                 handler(this, e);
         }

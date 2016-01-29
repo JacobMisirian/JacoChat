@@ -9,6 +9,8 @@ namespace JacoChatServer
 
         public string HostIp { get; set; }
         public int Port { get; set; }
+
+        public string MotdPath { get; set; }
     }
     
     public enum OutputMode
