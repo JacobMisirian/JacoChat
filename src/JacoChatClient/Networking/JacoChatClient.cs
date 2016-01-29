@@ -217,6 +217,9 @@ namespace JacoChatClient
                         case JacoChatMessageType.TOPIC:
                             OnTopicRecieved(new TopicRecievedEventArgs { Channel = msg.Channel, Topic = msg.Body });
                             break;
+                        case JacoChatMessageType.UNBAN:
+                            OnUnBanRecieved(new UnBanRecievedEventArgs { User = msg.Sender, Channel = msg.Channel });
+                            break;
                         case JacoChatMessageType.UNKNOWN:
                             OnUnknownRecieved(new UnknownRecievedEventArgs { Message = msg.Body });
                             break;
@@ -315,6 +318,14 @@ namespace JacoChatClient
         protected virtual void OnBanRecieved(BanRecievedEventArgs e)
         {
             EventHandler<BanRecievedEventArgs> handler = BanRecieved;
+            if (handler != null)
+                handler(this, e);
+        }
+
+        public event EventHandler<UnBanRecievedEventArgs> UnBanRecieved;
+        protected virtual void OnUnBanRecieved(UnBanRecievedEventArgs e)
+        {
+            EventHandler<UnBanRecievedEventArgs> handler = UnBanRecieved;
             if (handler != null)
                 handler(this, e);
         }

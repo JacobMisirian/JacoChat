@@ -55,6 +55,9 @@ namespace JacoChatServer
                     case "BAN":
                         BanCommand(client, parts[1], parts[2]);
                         break;
+                    case "UNBAN":
+                        UnBanCommand(client, parts[1], parts[2]);
+                        break;
                     case "LIST":
                         ListCommand(client);
                         break;

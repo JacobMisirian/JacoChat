@@ -78,6 +78,12 @@ namespace JacoChatClient
         public string Channel { get; set; }
     }
 
+    public class UnBanRecievedEventArgs : EventArgs
+    {
+        public string User { get; set; }
+        public string Channel { get; set; }
+    }
+
     public class ChanOpRecievedEventArgs : EventArgs
     {
         public string User { get; set; }

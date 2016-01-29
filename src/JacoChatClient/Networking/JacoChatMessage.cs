@@ -93,6 +93,12 @@ namespace JacoChatClient
                     channel = parts[2];
                     body = parts[2];
                     break;
+                case "UNBAN":
+                    type = JacoChatMessageType.UNBAN;
+                    sender = parts[0];
+                    channel = parts[2];
+                    body = parts[2];
+                    break;
                 case "CHANOP":
                     type = JacoChatMessageType.CHANOP;
                     sender = parts[3];
@@ -131,6 +137,7 @@ namespace JacoChatClient
         WHOIS,
         KICK,
         BAN,
+        UNBAN,
         CHANOP,
         LIST
     }

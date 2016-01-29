@@ -198,6 +198,22 @@ namespace JacoChatServer
             }
         }
 
+        public void UnBanCommand(Client client, string user, string channel)
+        {
+            int pos = channelExists(channel);
+            if (pos == -1)
+                SendToUser(client.NickName, MessageGeneration.GenerateError("No such channel " + channel), client);
+            else if (!Channels[pos].OpUsers.ContainsKey(client.NickName))
+                SendToUser(client.NickName, MessageGeneration.GenerateError("Not an OP in " + channel), client);
+            else if (!Channels[pos].BannedUsers.ContainsKey(user))
+                SendToUser(client.NickName, MessageGeneration.GenerateError(user + " us already unbanned in " + channel), client);
+            else
+            {
+                SendToChannel(Channels[pos], MessageGeneration.GenerateUnBan(user, channel), client);
+                Channels[pos].BannedUsers.Remove(user);
+            }
+        }
+
         public void ListCommand(Client client)
         {
             foreach (Channel chan in Channels)

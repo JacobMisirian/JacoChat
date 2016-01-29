@@ -150,7 +150,7 @@ couple this with the BAN commmand.
 
 Format:
 ```
-KICK [USER] [CHANNEL] [REASON]
+KICK [USER] #[CHANNEL] [REASON]
 ```
 
 For exmaple:
@@ -167,12 +167,26 @@ the KICK command (above).
 
 Format:
 ```
-BAN [USER] [CHANNEL]
+BAN [USER] #[CHANNEL]
 ```
 
 For example:
 ```
 BAN haxx0rPr0ny #ncagate
+```
+
+### UNBAN
+The unban command is used by channel OPs to remove a ban
+placed on a user.
+
+Format:
+```
+UNBAN [USER] #[CHANNEL]
+```
+
+For example:
+```
+UNBAN csharper #nca
 ```
 
 ### CHANOP
@@ -318,6 +332,20 @@ Format:
 For example:
 ```
 Fabtop BAN #hassium
+```
+
+### UNBAN
+The unban command is sent whenever a channel OP unbans
+a user from a channel you are in.
+
+Format:
+```
+[USER] UNBAN #[CHANNEL]
+```
+
+For example:
+```
+Putin UNBAN #crimea
 ```
 
 ### WHOIS
