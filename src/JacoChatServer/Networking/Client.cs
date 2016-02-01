@@ -28,6 +28,8 @@ namespace JacoChatServer
         public Thread ListenForMessages { get; set; }
         public Thread SendPing { get; set; }
 
+        public bool NetOp { get; set; }
+
         public Client(TcpClient client)
         {
             TcpClient = client;
@@ -38,6 +40,7 @@ namespace JacoChatServer
             Time = new Stopwatch();
             Time.Start();
             CountedMilliseconds = 0;
+            NetOp = false;
         }
 
         public void Send(string message)

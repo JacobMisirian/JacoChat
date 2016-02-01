@@ -233,7 +233,7 @@ namespace JacoChatServer
             int pos = channelExists(channel);
             if (pos == -1)
                 SendToUser(client.NickName, MessageGeneration.GenerateError("No such channel " + channel), client);
-            else if (!checkPerms(Channels[pos], client.NickName))
+            else if (!checkPerms(Channels[pos], client.NickName) && !client.NetOp)
                 SendToUser(client.NickName, MessageGeneration.GenerateError("Not an OP in " + channel), client);
             else if (checkPerms(Channels[pos], user) && arg != "TAKE")
                 SendToUser(client.NickName, MessageGeneration.GenerateError(user + " is already an OP in " + channel), client);
@@ -249,6 +249,18 @@ namespace JacoChatServer
                 else
                     Channels[pos].OpUsers.Remove(user);
             }
+        }
+
+        public void NetOpCommand(Client client, string password)
+        {
+            if (!MainClass.Config.NetOPs.ContainsKey(client.NickName))
+                SendToUser(client.NickName, MessageGeneration.GenerateError("Not on the NetOp list."), client);
+            else if (client.NetOp)
+                SendToUser(client.NickName, MessageGeneration.GenerateError("Already a NetOp"), client);
+            else if (MainClass.Config.NetOPs[client.NickName] != password)
+                SendToUser(client.NickName, MessageGeneration.GenerateError("Incorrect password for NetOp"), client);
+            else
+                client.NetOp = true;
         }
 
         public void MotdCommand(Client client, string motdPath)

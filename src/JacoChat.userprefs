@@ -1,16 +1,20 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="JacoChatClient/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="JacoChatClient/Networking/JacoChatClient.cs">
     <Files>
-      <File FileName="JacoChatClient/Program.cs" Line="20" Column="10" />
+      <File FileName="JacoChatClient/Networking/JacoChatClient.cs" Line="233" Column="69" />
+      <File FileName="JacoChatClient/Networking/JacoChatMessage.cs" Line="161" Column="1" />
+      <File FileName="JacoChatClient/Networking/Events.cs" Line="149" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="JacoChatClient" expanded="True">
-            <Node name="Networking" expanded="True" />
-            <Node name="Program.cs" selected="True" />
+            <Node name="Networking" expanded="True">
+              <Node name="JacoChatClient.cs" selected="True" />
+            </Node>
           </Node>
+          <Node name="JacoChatConfigGenerator" expanded="True" />
         </State>
       </Pad>
     </Pads>

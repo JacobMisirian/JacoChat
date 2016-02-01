@@ -32,10 +32,10 @@ namespace JacoChatServer
                     continue;
                 string[] parts = line.Split(' ');
 
-                switch (parts[0])
+                switch (parts[0].ToLower())
                 {
-                    case "OutputMode":
-                        if (parts[1] == "stdout")
+                    case "outputmode":
+                        if (parts[1].ToLower() == "stdout")
                             config.OutputMode = OutputMode.StdOut;
                         else
                         {
@@ -43,14 +43,17 @@ namespace JacoChatServer
                             config.OutputFilePath = parts[1];
                         }
                         break;
-                    case "HostName":
+                    case "hostname":
                         config.HostIp = parts[1];
                         break;
-                    case "Port":
+                    case "port":
                         config.Port = Convert.ToInt32(parts[1]);
                         break;
-                    case "Motd":
+                    case "motd":
                         config.MotdPath = parts[1];
+                        break;
+                    case "netop":
+                        config.NetOPs.Add(parts[1], parts[2]);
                         break;
                 }
             }

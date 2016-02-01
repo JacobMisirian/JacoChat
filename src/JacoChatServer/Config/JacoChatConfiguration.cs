@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace JacoChatServer
 {
@@ -11,6 +12,8 @@ namespace JacoChatServer
         public int Port { get; set; }
 
         public string MotdPath { get; set; }
+
+        public Dictionary<string, string> NetOPs = new Dictionary<string, string>();
     }
     
     public enum OutputMode

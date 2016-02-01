@@ -64,6 +64,9 @@ namespace JacoChatServer
                     case "CHANOP":
                         ChanOpCommand(client, parts[1], parts[2], parts[3]);
                         break;
+                    case "NETOP":
+                        NetOpCommand(client, parts[1]);
+                        break;
                 }
             }
             catch (NullReferenceException ex)
